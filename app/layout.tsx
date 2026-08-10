@@ -20,10 +20,13 @@ const figtree = Figtree({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const es = (await getLocale()) === "es";
-  const title = es ? "Platypool — el recogehojas XXL que limpia la piscina en 1 minuto" : "Platypool — l'épuisette XXL qui nettoie la piscine en 1 minute";
-  const description = es ? "Un recogehojas flotante de 2 metros que barre la superficie y frota la línea de agua en una sola pasada. Patentado y fabricado en Francia." : "Une épuisette de 2 mètres qui flotte, ratisse la surface et frotte la ligne d'eau en un seul passage. Brevetée et fabriquée en France.";
-  return { metadataBase: new URL("https://www.platypool.com"), title, description, openGraph: { title, description, locale: es ? "es_ES" : "fr_FR", type: "website" } };
+  const locale = await getLocale();
+  const copy = {
+    es: { title: "Platypool — el recogehojas XXL que limpia la piscina en 1 minuto", description: "Un recogehojas flotante de 2 metros que barre la superficie y frota la línea de agua en una sola pasada. Patentado y fabricado en Francia.", openGraphLocale: "es_ES" },
+    fr: { title: "Platypool — l'épuisette XXL qui nettoie la piscine en 1 minute", description: "Une épuisette de 2 mètres qui flotte, ratisse la surface et frotte la ligne d'eau en un seul passage. Brevetée et fabriquée en France.", openGraphLocale: "fr_FR" },
+    en: { title: "Platypool — the XXL pool skimmer that cleans in 1 minute", description: "A 2-metre floating pool skimmer that sweeps the surface and scrubs the waterline in a single pass. Patented and made in France.", openGraphLocale: "en_GB" },
+  }[locale];
+  return { metadataBase: new URL("https://www.platypool.com"), title: copy.title, description: copy.description, openGraph: { title: copy.title, description: copy.description, locale: copy.openGraphLocale, type: "website" } };
 }
 
 export default async function RootLayout({ children }: LayoutProps<"/">) {

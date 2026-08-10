@@ -3,8 +3,8 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import PageChrome from "@/components/PageChrome";
 import Arrow from "@/components/Arrow";
-import { articleBySlug, articleEsBySlug, articles, articlesEs, type Article } from "@/lib/articles";
-import { getLocale, localizedPath } from "@/lib/i18n";
+import { articleBySlug, articleEnBySlug, articleEsBySlug, articles, articlesEn, articlesEs, type Article } from "@/lib/articles";
+import { byLocale, getLocale, localizedPath } from "@/lib/i18n";
 
 export function generateStaticParams() {
   return articles.map(({ slug }) => ({ slug }));
@@ -12,7 +12,8 @@ export function generateStaticParams() {
 
 export async function generateMetadata({ params }: PageProps<"/blogs/infos/[slug]">): Promise<Metadata> {
   const { slug } = await params;
-  const article = (await getLocale()) === "es" ? articleEsBySlug.get(slug) : articleBySlug.get(slug);
+  const locale = await getLocale();
+  const article = byLocale(locale, { es: articleEsBySlug, fr: articleBySlug, en: articleEnBySlug }).get(slug);
   return article ? { title: `${article.title} — Platypool`, description: article.excerpt } : {};
 }
 
@@ -62,14 +63,46 @@ const copyEs: Record<Article["category"], Array<[string, string[]]>> = {
   ],
 };
 
+const copyEn: Record<Article["category"], Array<[string, string[]]>> = {
+  Entretien: [
+    ["Start with what floats", ["Leaves, pollen and insects are much easier to remove before they sink or stick to the waterline. A short, regular pass almost always prevents the big weekend clean.", "Work with the wind and begin where debris gathers: corners, skimmers and the edge opposite the prevailing wind."]],
+    ["The right move at the right time", ["Act while dirt is still fresh. A wide tool reduces the number of passes, while a floating frame means you never carry the weight of the water and debris.", "Consistency matters more than force. Two minutes several times a week beats half an hour after everything has settled on the bottom."]],
+    ["Surface, waterline, then filtration", ["Remove visible matter first, clean the waterline with a gentle accessory, then check filtration and the pool's balance. This order avoids circulating what you have just removed."]],
+  ],
+  "Bien choisir": [
+    ["Useful width", ["A narrow skimmer may look easy to handle, but it multiplies the number of passes. The right width covers a meaningful part of the pool while remaining easy to guide.", "For large pools, the surface covered with each pass matters far more than a few grams of difference in the handle."]],
+    ["Weight, buoyancy and capacity", ["The stated weight does not tell the whole story: a floating tool handles very differently from a net you have to support. Check its real capacity and how easily it empties too.", "A large pocket saves you from stopping leaf by leaf, provided the structure stays stable when loaded."]],
+    ["Durability and replaceable parts", ["Sunlight, chlorine and friction are the real tests. Choose UV-resistant materials and a design that lets you replace the net or brushes without discarding the whole frame."]],
+  ],
+  Comparatif: [
+    ["Two tools, two jobs", ["A robot works mainly on the bottom. A skimmer acts earlier: it removes floating debris and prevents some of it from reaching the floor. The two tools complement each other.", "Compare setup time, surface coverage and real effort, not just the price tag."]],
+    ["Cost over several seasons", ["A cheap but fragile accessory may need replacing every summer. A repairable frame costs more initially, but only its wear parts need changing later."]],
+    ["What actually saves time", ["Width, buoyancy and the ability to clean the waterline in the same pass directly reduce the length of the routine."]],
+  ],
+  Innovation: [
+    ["Begin with a real frustration", ["Useful innovations rarely begin with technology. They begin with a repetitive chore, an awkward movement or an object that has not evolved for far too long.", "Platypool came from that observation: making dozens of passes with a small net no longer made sense."]],
+    ["Design it to last", ["An innovation only matters if it survives season after season. Materials, repairability and the availability of wear parts are as much a part of the product as its central idea."]],
+    ["Make it close to home", ["A short supply chain makes quality control, improvements and after-sales service easier. Platypool is made in France and assembled in Alsace with ESAT Les Tournesols."]],
+  ],
+};
+
 export default async function ArticlePage({ params }: PageProps<"/blogs/infos/[slug]">) {
   const { slug } = await params;
   const locale = await getLocale();
-  const es = locale === "es";
-  const article = es ? articleEsBySlug.get(slug) : articleBySlug.get(slug);
+  const source = byLocale(locale, {
+    es: { map: articleEsBySlug, articles: articlesEs, copy: copyEs },
+    fr: { map: articleBySlug, articles, copy },
+    en: { map: articleEnBySlug, articles: articlesEn, copy: copyEn },
+  });
+  const article = source.map.get(slug);
   if (!article) notFound();
-  const related = (es ? articlesEs : articles).filter((item) => item.category === article.category && item.slug !== slug).slice(0, 3);
-  const category = es ? ({ Entretien: "Mantenimiento", "Bien choisir": "Cómo elegir", Comparatif: "Comparativa", Innovation: "Innovación" }[article.category]) : article.category;
+  const related = source.articles.filter((item) => item.category === article.category && item.slug !== slug).slice(0, 3);
+  const t = byLocale(locale, {
+    es: { intro: "Una piscina limpia no exige necesariamente más material ni más esfuerzo. Lo importante es entender dónde se acumula la suciedad y actuar antes de que se convierta en una tarea pesada.", summary: "En resumen", summaryCopy: "Retirar pronto los residuos, cubrir más superficie en cada pasada y elegir una herramienta reparable: tres decisiones sencillas que transforman toda la rutina.", discover: "Descubrir Platypool", more: "Seguir leyendo", categories: { Entretien: "Mantenimiento", "Bien choisir": "Cómo elegir", Comparatif: "Comparativa", Innovation: "Innovación" } },
+    fr: { intro: "Une piscine propre ne demande pas forcément plus de matériel ni plus d'effort. Elle demande surtout de comprendre où les salissures s'accumulent et d'intervenir avant qu'elles ne deviennent une corvée.", summary: "À retenir", summaryCopy: "Retirer les débris tôt, couvrir plus de surface à chaque passage et choisir un outil réparable : trois décisions simples qui changent toute la routine.", discover: "Découvrir Platypool", more: "Continuer la lecture", categories: { Entretien: "Entretien", "Bien choisir": "Bien choisir", Comparatif: "Comparatif", Innovation: "Innovation" } },
+    en: { intro: "A clean pool does not necessarily require more equipment or more effort. What matters is understanding where dirt gathers and acting before it becomes a major chore.", summary: "In short", summaryCopy: "Remove debris early, cover more surface with every pass and choose a repairable tool: three simple decisions that transform the whole routine.", discover: "Discover Platypool", more: "Keep reading", categories: { Entretien: "Maintenance", "Bien choisir": "Buying guide", Comparatif: "Comparison", Innovation: "Innovation" } },
+  });
+  const category = t.categories[article.category];
 
   return (
     <PageChrome>
@@ -83,12 +116,12 @@ export default async function ArticlePage({ params }: PageProps<"/blogs/infos/[s
         </header>
         <div className="reveal mx-auto max-w-6xl px-5 sm:px-8"><div className="wipe-mask overflow-hidden rounded-2xl" data-wipe><Image src={article.image} alt="" width={1400} height={900} priority className="aspect-[16/9] w-full object-cover" sizes="92vw" /></div></div>
         <div className="editorial mx-auto max-w-3xl px-5 py-20 sm:px-8 sm:py-28">
-          <p className="!mt-0 text-[1.15rem] !text-ink/75">{es ? "Una piscina limpia no exige necesariamente más material ni más esfuerzo. Lo importante es entender dónde se acumula la suciedad y actuar antes de que se convierta en una tarea pesada." : "Une piscine propre ne demande pas forcément plus de matériel ni plus d'effort. Elle demande surtout de comprendre où les salissures s'accumulent et d'intervenir avant qu'elles ne deviennent une corvée."}</p>
-          {(es ? copyEs : copy)[article.category].map(([heading, paragraphs]) => <section key={heading}><h2 data-blur>{heading}</h2>{paragraphs.map(p=><p key={p} data-blur>{p}</p>)}</section>)}
-          <aside className="reveal mt-14 rounded-2xl bg-aqua/35 p-7 sm:p-9"><p className="meta !mt-0 !text-ink/40">{es ? "En resumen" : "À retenir"}</p><p className="!text-ink/75">{es ? "Retirar pronto los residuos, cubrir más superficie en cada pasada y elegir una herramienta reparable: tres decisiones sencillas que transforman toda la rutina." : "Retirer les débris tôt, couvrir plus de surface à chaque passage et choisir un outil réparable : trois décisions simples qui changent toute la routine."}</p><a href={localizedPath(locale, "/products/epuisette-xxl")} className="mt-6 inline-flex items-center gap-3 border-b border-ink/25 pb-1">{es ? "Descubrir Platypool" : "Découvrir Platypool"} <Arrow /></a></aside>
+          <p className="!mt-0 text-[1.15rem] !text-ink/75">{t.intro}</p>
+          {source.copy[article.category].map(([heading, paragraphs]) => <section key={heading}><h2 data-blur>{heading}</h2>{paragraphs.map(p=><p key={p} data-blur>{p}</p>)}</section>)}
+          <aside className="reveal mt-14 rounded-2xl bg-aqua/35 p-7 sm:p-9"><p className="meta !mt-0 !text-ink/40">{t.summary}</p><p className="!text-ink/75">{t.summaryCopy}</p><a href={localizedPath(locale, "/products/epuisette-xxl")} className="mt-6 inline-flex items-center gap-3 border-b border-ink/25 pb-1">{t.discover} <Arrow /></a></aside>
         </div>
       </article>
-      <section className="bg-stone px-5 py-20 sm:px-8 sm:py-28"><div className="mx-auto max-w-6xl"><h2 className="display text-[clamp(1.8rem,4vw,3rem)]" data-blur>{es ? "Seguir leyendo" : "Continuer la lecture"}</h2><div className="mt-10 grid gap-7 md:grid-cols-3">{related.map(item=><a href={localizedPath(locale, `/blogs/infos/${item.slug}`)} key={item.slug} className="reveal group"><Image src={item.image} alt="" width={700} height={525} className="aspect-[4/3] w-full rounded-2xl object-cover" /><h3 className="display mt-5 text-[1.45rem]">{item.title}</h3></a>)}</div></div></section>
+      <section className="bg-stone px-5 py-20 sm:px-8 sm:py-28"><div className="mx-auto max-w-6xl"><h2 className="display text-[clamp(1.8rem,4vw,3rem)]" data-blur>{t.more}</h2><div className="mt-10 grid gap-7 md:grid-cols-3">{related.map(item=><a href={localizedPath(locale, `/blogs/infos/${item.slug}`)} key={item.slug} className="reveal group"><Image src={item.image} alt="" width={700} height={525} className="aspect-[4/3] w-full rounded-2xl object-cover" /><h3 className="display mt-5 text-[1.45rem]">{item.title}</h3></a>)}</div></div></section>
     </PageChrome>
   );
 }

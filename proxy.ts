@@ -1,15 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-type Locale = "es" | "fr";
+type Locale = "es" | "fr" | "en";
 const isLocale = (value: string | null | undefined): value is Locale =>
-  value === "es" || value === "fr";
+  value === "es" || value === "fr" || value === "en";
 
 function preferredLocale(request: NextRequest): Locale {
   const saved = request.cookies.get("platypool-locale")?.value;
   if (isLocale(saved)) return saved;
-  return request.headers.get("accept-language")?.toLowerCase().startsWith("fr")
-    ? "fr"
-    : "es";
+  const language = request.headers.get("accept-language")?.toLowerCase();
+  if (language?.startsWith("fr")) return "fr";
+  if (language?.startsWith("en")) return "en";
+  return "es";
 }
 
 export function proxy(request: NextRequest) {

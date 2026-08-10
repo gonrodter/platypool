@@ -1,12 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import type { Locale } from "@/lib/i18n";
 
 type Props = {
   children: ReactNode;
   ariaLabel: string;
   initialTotal: number;
-  locale: "es" | "fr";
+  locale: Locale;
   wrapperClassName?: string;
   scrollerClassName: string;
   indicatorClassName?: string;
@@ -94,7 +95,7 @@ export default function HorizontalCarousel({
           />
         </span>
         <span className="meta whitespace-nowrap text-ink/45">
-          {locale === "es" ? "Desliza" : "Faites glisser"} →
+          {locale === "en" ? "Swipe" : locale === "es" ? "Desliza" : "Faites glisser"} →
         </span>
       </div>
     </div>

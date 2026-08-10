@@ -116,10 +116,41 @@ const entriesEs: Entry[] = [
   },
 ];
 
+const entriesEn: Entry[] = [
+  {
+    q: "Is it easy to use?",
+    a: <><p>Place it on the water and pull the rope as you walk around the pool. It floats and collects everything in its path.</p><p>To remove it, pull the rope, shake it out in a corner and leave it to dry. Once dry, another quick shake removes the pollen.</p></>,
+  },
+  {
+    q: "Do I need tools to assemble it?",
+    a: <p>No. You assemble it once when it arrives, in four steps and without tools. It takes just one minute. You can also take it apart and store it in its box over winter.</p>,
+  },
+  {
+    q: "Is it compatible with every pool?",
+    a: <p>Yes: in-ground or above-ground, liner, tiled, concrete or wooden, in any shape or size. If your pool is more than 4 metres wide, simply make two passes.</p>,
+  },
+  {
+    q: "Does Platypool replace a pool robot?",
+    a: <p>No. Platypool cleans the surface and waterline; a robot cleans the bottom. They complement each other. Using Platypool regularly means fewer leaves reach the bottom and less work for the robot.</p>,
+  },
+  {
+    q: "What if the net tears or the brushes wear out?",
+    a: <p>Every part can be replaced and our customer service team is based in France. More than 10,000 Platypools have been sold without a single after-sales return. If anything goes wrong, we send the part immediately and free of charge.</p>,
+  },
+  {
+    q: "What is included in the box?",
+    a: <p>Four 50 cm tubes, two extenders with pre-fitted brushes, one 2-metre net and one rope with four hooks already attached. The box measures 52 × 17 cm and weighs 1.2 kg.</p>,
+  },
+  {
+    q: "How do delivery, returns and the warranty work?",
+    a: <p>You choose your DPD pickup point after payment. You have 14 days to change your mind about an unused product in its original packaging. Refunds are issued within 7 days of receipt and the manufacturer warranty lasts 2 years.</p>,
+  },
+];
+
 export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   const pathname = usePathname();
-  const entries = pathname === "/es" || pathname.startsWith("/es/") ? entriesEs : entriesFr;
+  const entries = pathname === "/en" || pathname.startsWith("/en/") ? entriesEn : pathname === "/es" || pathname.startsWith("/es/") ? entriesEs : entriesFr;
 
   return (
     <div className="border-t border-ink/12">

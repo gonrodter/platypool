@@ -2,24 +2,30 @@ import Image from "next/image";
 import PageChrome from "@/components/PageChrome";
 import Words from "@/components/Words";
 import Arrow from "@/components/Arrow";
-import { articles, articlesEs } from "@/lib/articles";
-import { getLocale, localizedMetadata, localizedPath } from "@/lib/i18n";
+import { articles, articlesEn, articlesEs } from "@/lib/articles";
+import { byLocale, getLocale, localizedMetadata, localizedPath } from "@/lib/i18n";
 
 export const generateMetadata = () => localizedMetadata(
   { title: "Conseils piscine — Platypool", description: "Guides simples pour nettoyer la surface, la ligne d'eau et choisir les bons accessoires de piscine." },
   { title: "Consejos de piscina — Platypool", description: "Guías sencillas para limpiar la superficie, la línea de agua y elegir los accesorios adecuados para la piscina." },
+  { title: "Pool care tips — Platypool", description: "Straightforward guides to cleaning the surface and waterline and choosing the right pool accessories." },
 );
 
 export default async function BlogPage() {
   const locale = await getLocale();
-  const es = locale === "es";
-  const [featured, ...rest] = es ? articlesEs : articles;
-  const category = (value: string) => es ? ({ Entretien: "Mantenimiento", "Bien choisir": "Cómo elegir", Comparatif: "Comparativa", Innovation: "Innovación" }[value] ?? value) : value;
+  const list = byLocale(locale, { es: articlesEs, fr: articles, en: articlesEn });
+  const [featured, ...rest] = list;
+  const t = byLocale(locale, {
+    es: { title: "Menos tareas. / Más *baños*", featured: "Para leer", guide: "Leer la guía", categories: { Entretien: "Mantenimiento", "Bien choisir": "Cómo elegir", Comparatif: "Comparativa", Innovation: "Innovación" } },
+    fr: { title: "Moins de corvée. / Plus de *baignades*", featured: "À lire", guide: "Lire le guide", categories: { Entretien: "Entretien", "Bien choisir": "Bien choisir", Comparatif: "Comparatif", Innovation: "Innovation" } },
+    en: { title: "Fewer chores. / More *swimming*", featured: "Featured", guide: "Read the guide", categories: { Entretien: "Maintenance", "Bien choisir": "Buying guide", Comparatif: "Comparison", Innovation: "Innovation" } },
+  });
+  const category = (value: keyof typeof t.categories) => t.categories[value];
   return (
     <PageChrome>
       <section className="px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24">
         <div className="mx-auto max-w-6xl">
-          <Words as="h1" className="display max-w-5xl text-[clamp(2.8rem,7vw,6rem)]" text={es ? "Menos tareas. / Más *baños*" : "Moins de corvée. / Plus de *baignades*"} />
+          <Words as="h1" className="display max-w-5xl text-[clamp(2.8rem,7vw,6rem)]" text={t.title} />
         </div>
       </section>
 
@@ -29,9 +35,9 @@ export default async function BlogPage() {
             <div className="reveal"><div className="wipe-mask overflow-hidden rounded-2xl" data-wipe><Image src={featured.image} alt="" width={1200} height={900} priority className="aspect-[4/3] w-full object-cover" sizes="(min-width:1024px) 57vw, 92vw" /></div></div>
             <div className="reveal p-3 sm:p-6">
               <h2 className="display text-[clamp(2rem,4vw,3.4rem)]" data-blur>{featured.title}</h2>
-              <p className="meta mt-4 text-ink/40" data-blur>{es ? "Para leer" : "À lire"} · {category(featured.category)}</p>
+              <p className="meta mt-4 text-ink/40" data-blur>{t.featured} · {category(featured.category)}</p>
               <p className="mt-5 text-ink/60" data-blur>{featured.excerpt}</p>
-              <span className="mt-8 inline-flex items-center gap-3 border-b border-ink/30 pb-1">{es ? "Leer la guía" : "Lire le guide"} <Arrow /></span>
+              <span className="mt-8 inline-flex items-center gap-3 border-b border-ink/30 pb-1">{t.guide} <Arrow /></span>
             </div>
           </a>
 

@@ -21,11 +21,19 @@ const copy = {
     made: "diseñada y fabricada en Francia",
     home: "inicio",
   },
+  en: {
+    shopTitle: "Shop",
+    follow: "Follow us",
+    shop: [["The XXL pool skimmer", "/products/epuisette-xxl"], ["Replacement net", "/products/filet"], ["Delivery", "/pages/livraison"], ["Pool care tips", "/blogs/infos"]],
+    company: [["Our story", "/pages/lepuisette-platypool-fabriquee-en-france-impact-social-et-eco-responsable"], ["Contact", "/pages/contact"], ["Withdrawal", "/pages/formulaire-de-retractation"], ["Policies", "/pages/nos-politiques"]],
+    made: "designed and made in France",
+    home: "home",
+  },
 } as const;
 
 export default function Footer() {
   const pathname = usePathname();
-  const locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : "es";
+  const locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : pathname === "/en" || pathname.startsWith("/en/") ? "en" : "es";
   const t = copy[locale];
   const localize = (path: string) => path === "/" ? `/${locale}` : `/${locale}${path}`;
 

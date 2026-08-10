@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
+import type { Locale } from "@/lib/i18n";
 
 const links = {
   fr: [
@@ -19,19 +20,34 @@ const links = {
     ["/blogs/infos", "Consejos"],
     ["/pages/contact", "Contacto"],
   ],
+  en: [
+    ["/", "Home"],
+    ["/products/epuisette-xxl", "The skimmer"],
+    ["/pages/lepuisette-platypool-fabriquee-en-france-impact-social-et-eco-responsable", "Our story"],
+    ["/blogs/infos", "Tips"],
+    ["/pages/contact", "Contact"],
+  ],
 } as const;
+
+const navCopy = {
+  es: { home: "inicio", buy: "Comprar", open: "Abrir menú", close: "Cerrar menú", mobile: "Menú móvil", language: "Seleccionar idioma" },
+  fr: { home: "accueil", buy: "Acheter", open: "Ouvrir le menu", close: "Fermer le menu", mobile: "Menu mobile", language: "Choisir la langue" },
+  en: { home: "home", buy: "Buy", open: "Open menu", close: "Close menu", mobile: "Mobile menu", language: "Select language" },
+} as const;
+
+const languageNames = { es: "Español", fr: "Français", en: "English" } as const;
 
 export default function Nav() {
   const pathname = usePathname();
-  const locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : "es";
-  const pathWithoutLocale = pathname.replace(/^\/(es|fr)(?=\/|$)/, "") || "/";
+  const locale: Locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : pathname === "/en" || pathname.startsWith("/en/") ? "en" : "es";
+  const t = navCopy[locale];
+  const pathWithoutLocale = pathname.replace(/^\/(es|fr|en)(?=\/|$)/, "") || "/";
   const home = pathWithoutLocale === "/";
   const [pastHero, setPastHero] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const solid = !home || pastHero;
   const localize = (path: string) => path === "/" ? `/${locale}` : `/${locale}${path}`;
-  const switchTo = locale === "es" ? "fr" : "es";
-  const switchHref = pathWithoutLocale === "/" ? `/${switchTo}` : `/${switchTo}${pathWithoutLocale}`;
+  const languageHref = (target: Locale) => pathWithoutLocale === "/" ? `/${target}` : `/${target}${pathWithoutLocale}`;
 
   useEffect(() => {
     if (!home) return;
@@ -93,7 +109,7 @@ export default function Nav() {
     >
       <div className="relative z-20 flex items-center justify-between px-3 py-4 min-[360px]:px-5 sm:px-8">
         <a href={home ? "#top" : localize("/")} className="relative block h-4 w-[9.5rem] sm:h-5 sm:w-[11.5rem]">
-          <span className="sr-only">Platypool — {locale === "es" ? "inicio" : "accueil"}</span>
+          <span className="sr-only">Platypool — {t.home}</span>
           <Image
             src="/media/logo-platypool.webp"
             alt=""
@@ -125,17 +141,25 @@ export default function Nav() {
         </nav>
 
         <div className="hidden items-center gap-2 lg:flex">
-          <a
-            href={switchHref}
-            className={`meta whitespace-nowrap rounded-full border px-3 py-2 transition-colors ${
-              solid
-                ? "border-ink/15 hover:bg-ink hover:text-paper"
-                : "border-paper/25 bg-paper/10 text-paper backdrop-blur-sm hover:bg-paper/25"
-            }`}
-            aria-label={locale === "es" ? "Cambiar a francés" : "Passer en espagnol"}
-          >
-            {locale === "es" ? "ES · FR" : "FR · ES"}
-          </a>
+          <details className="group relative">
+            <summary
+              className={`meta flex cursor-pointer list-none items-center gap-2 whitespace-nowrap rounded-full border px-3 py-2 transition-colors [&::-webkit-details-marker]:hidden ${
+                solid
+                  ? "border-ink/15 hover:bg-ink hover:text-paper"
+                  : "border-paper/25 bg-paper/10 text-paper backdrop-blur-sm hover:bg-paper/25"
+              }`}
+              aria-label={t.language}
+            >
+              {locale.toUpperCase()} <span className="text-[0.7rem] transition-transform group-open:rotate-180">↓</span>
+            </summary>
+            <div className={`absolute right-0 mt-2 min-w-36 overflow-hidden rounded-2xl border p-1 shadow-xl ${solid ? "border-ink/10 bg-paper text-ink" : "border-paper/15 bg-deep/95 text-paper backdrop-blur-md"}`}>
+              {(["es", "fr", "en"] as const).map((target) => (
+                <a key={target} href={languageHref(target)} aria-current={target === locale ? "page" : undefined} className={`meta block rounded-xl px-4 py-3 transition-colors hover:bg-aqua hover:text-ink ${target === locale ? "text-aqua-deep" : ""}`}>
+                  {languageNames[target]}
+                </a>
+              ))}
+            </div>
+          </details>
           <a
             href={localize("/products/epuisette-xxl")}
             className={`meta whitespace-nowrap rounded-full px-4 py-2 transition-colors ${
@@ -144,14 +168,14 @@ export default function Nav() {
                 : "bg-paper/15 text-paper backdrop-blur-sm hover:bg-paper/30"
             }`}
           >
-            {locale === "es" ? "Comprar" : "Acheter"}<span className="max-[359px]:hidden"> · 69 €</span>
+            {t.buy}<span className="max-[359px]:hidden"> · 69 €</span>
           </a>
         </div>
 
         <button
           type="button"
           className="flex h-9 w-11 flex-col items-end justify-center gap-[6px] lg:hidden"
-          aria-label={menuOpen ? (locale === "es" ? "Cerrar menú" : "Fermer le menu") : (locale === "es" ? "Abrir menú" : "Ouvrir le menu")}
+          aria-label={menuOpen ? t.close : t.open}
           aria-expanded={menuOpen}
           aria-controls="mobile-menu"
           onClick={() => setMenuOpen((open) => !open)}
@@ -171,7 +195,7 @@ export default function Nav() {
         }`}
       >
         <div className="mx-auto flex min-h-full max-w-xl flex-col">
-          <nav className="flex-1 border-b border-paper/15" aria-label={locale === "es" ? "Menú móvil" : "Menu mobile"}>
+          <nav className="flex-1 border-b border-paper/15" aria-label={t.mobile}>
             {links[locale].map(([href, label], index) => {
               const active = pathWithoutLocale === href;
               return (
@@ -192,21 +216,21 @@ export default function Nav() {
             })}
           </nav>
 
-          <div className="grid gap-3 pt-7 min-[430px]:grid-cols-2">
-            <a
-              href={switchHref}
-              onClick={() => setMenuOpen(false)}
-              className="pill justify-center border border-paper/25 text-paper hover:bg-paper hover:text-ink"
-              aria-label={locale === "es" ? "Cambiar a francés" : "Passer en espagnol"}
-            >
-              {locale === "es" ? "Français" : "Español"}
-            </a>
+          <div className="pt-7">
+            <p className="meta mb-3 text-paper/40">{t.language}</p>
+            <div className="grid grid-cols-3 gap-2">
+              {(["es", "fr", "en"] as const).map((target) => (
+                <a key={target} href={languageHref(target)} onClick={() => setMenuOpen(false)} aria-current={target === locale ? "page" : undefined} className={`pill justify-center border px-3 ${target === locale ? "border-aqua bg-aqua text-ink" : "border-paper/25 text-paper"}`}>
+                  {target.toUpperCase()}
+                </a>
+              ))}
+            </div>
             <a
               href={localize("/products/epuisette-xxl")}
               onClick={() => setMenuOpen(false)}
-              className="pill justify-center bg-aqua text-ink hover:bg-paper"
+              className="pill mt-3 w-full justify-center bg-aqua text-ink hover:bg-paper"
             >
-              {locale === "es" ? "Comprar · 69 €" : "Acheter · 69 €"}
+              {t.buy} · 69 €
             </a>
           </div>
         </div>

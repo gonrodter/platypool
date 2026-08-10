@@ -1,11 +1,11 @@
 import { headers } from "next/headers";
 import type { Metadata } from "next";
 
-export const locales = ["es", "fr"] as const;
+export const locales = ["es", "fr", "en"] as const;
 export type Locale = (typeof locales)[number];
 
 export function isLocale(value: string | null | undefined): value is Locale {
-  return value === "es" || value === "fr";
+  return value === "es" || value === "fr" || value === "en";
 }
 
 export async function getLocale(): Promise<Locale> {
@@ -19,6 +19,11 @@ export function localizedPath(locale: Locale, path: string) {
   return `/${locale}${path}`;
 }
 
-export async function localizedMetadata(fr: Metadata, es: Metadata): Promise<Metadata> {
-  return (await getLocale()) === "es" ? es : fr;
+export function byLocale<T>(locale: Locale, copy: Record<Locale, T>): T {
+  return copy[locale];
+}
+
+export async function localizedMetadata(fr: Metadata, es: Metadata, en: Metadata): Promise<Metadata> {
+  const locale = await getLocale();
+  return locale === "en" ? en : locale === "es" ? es : fr;
 }

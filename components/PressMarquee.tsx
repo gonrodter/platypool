@@ -32,7 +32,7 @@ const press = [
 export default function PressMarquee() {
   const track = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
-  const es = pathname === "/es" || pathname.startsWith("/es/");
+  const locale = pathname === "/en" || pathname.startsWith("/en/") ? "en" : pathname === "/es" || pathname.startsWith("/es/") ? "es" : "fr";
 
   useEffect(() => {
     const el = track.current;
@@ -62,7 +62,7 @@ export default function PressMarquee() {
     <div
       className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
       role="list"
-      aria-label={es ? "Prensa y revistas" : "Presse et magazines"}
+      aria-label={locale === "en" ? "Press and magazines" : locale === "es" ? "Prensa y revistas" : "Presse et magazines"}
     >
       <div ref={track} className="flex w-max items-center">
         {[0, 1].map((copy) => (

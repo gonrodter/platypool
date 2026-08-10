@@ -6,11 +6,15 @@ import type { Locale } from "@/lib/i18n";
  * there is no pinned spacer and scrolling never controls the playhead.
  */
 export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
-  const es = locale === "es";
+  const t = {
+    es: { label: "Platypool en acción", title: "Veinte minutos de trabajo / reducidos a *uno*", copy: "La colocas sobre el agua, tiras de una cuerda y caminas. Eso es todo.", buy: "Comprar", shipping: "Envío a Francia y Europa" },
+    fr: { label: "Platypool en action", title: "Vingt minutes de corvée, / réduites à *une*", copy: "Vous la posez sur l'eau, vous tirez sur une corde, vous marchez. C'est tout ce qu'il y a à faire.", buy: "Acheter", shipping: "Livraison France & Europe" },
+    en: { label: "Platypool in action", title: "Twenty minutes of work / reduced to *one*", copy: "Place it on the water, pull the rope and walk. That is all it takes.", buy: "Buy", shipping: "Delivery across France and Europe" },
+  }[locale];
   return (
     <section
       className="relative h-svh w-full overflow-hidden bg-deep"
-      aria-label={es ? "Platypool en acción" : "Platypool en action"}
+      aria-label={t.label}
     >
       <video
         data-hero-media
@@ -40,10 +44,10 @@ export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
           <Words
             as="h1"
             className="display text-[clamp(2.5rem,7.5vw,6rem)]"
-            text={es ? "Veinte minutos de trabajo / reducidos a *uno*" : "Vingt minutes de corvée, / réduites à *une*"}
+            text={t.title}
           />
           <p className="mt-7 max-w-md text-[0.98rem] leading-relaxed text-paper/80" data-blur>
-            {es ? "La colocas sobre el agua, tiras de una cuerda y caminas. Eso es todo." : "Vous la posez sur l'eau, vous tirez sur une corde, vous marchez. C'est tout ce qu'il y a à faire."}
+            {t.copy}
           </p>
         </div>
 
@@ -53,8 +57,8 @@ export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
               href="#acheter"
               className="group inline-flex items-baseline gap-3 border-b border-paper/40 pb-1 transition-colors hover:border-paper"
             >
-              <span className="text-[1.05rem]">{es ? "Comprar" : "Acheter"} — 69 €</span>
-              <span className="meta text-paper/55">{es ? "Envío a Francia y Europa" : "Livraison France & Europe"}</span>
+              <span className="text-[1.05rem]">{t.buy} — 69 €</span>
+              <span className="meta text-paper/55">{t.shipping}</span>
             </a>
           </div>
         </div>

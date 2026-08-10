@@ -126,3 +126,55 @@ export const articlesEs: Article[] = entries.map(([slug, , category], index) => 
 }));
 
 export const articleEsBySlug = new Map(articlesEs.map((article) => [article.slug, article]));
+
+const englishTitles = [
+  "French innovation: the pool accessories changing maintenance",
+  "What width pool skimmer should you choose?",
+  "A sturdy, UV-resistant pool skimmer: how to choose",
+  "A pool skimmer compatible with every pool",
+  "Pool maintenance without a robot: a practical guide",
+  "Clean your pool in ten minutes",
+  "The pool accessories that genuinely save time",
+  "XXL pool skimmer or pool robot?",
+  "How to remove pollen from your pool easily",
+  "A guide to pool surface maintenance",
+  "Do you need an XXL skimmer for your pool?",
+  "XXL pool skimmers: reviews and useful criteria",
+  "Which skimmer should you choose for an in-ground pool?",
+  "Wide pool skimmer or classic skimmer",
+  "How to maintain your pool every day",
+  "A guide to choosing your pool skimmer",
+  "How to clean the pool waterline",
+  "How to remove leaves from the pool surface",
+  "How to choose a better pool skimmer",
+  "The best skimmers for a large pool",
+  "How to clean your pool in two minutes",
+  "Platypool versus a classic pool skimmer",
+  "How to clean your pool in two minutes",
+  "A pool accessory that is genuinely easy to use",
+  "Why choose a pool skimmer made in France",
+  "What is the best pool skimmer?",
+  "How to collect pine needles from your pool",
+  "How to remove pollen from your pool",
+  "Choose a skimmer that also cleans the waterline",
+  "Effortless daily pool cleaning",
+  "The maintenance accessory that saves time",
+  "How to choose a leaf skimmer",
+  "Which skimmer should you choose for a large pool?",
+  "How to clean the water surface quickly",
+  "How to remove leaves from your pool",
+  "How to clean your pool's waterline",
+];
+
+export const articlesEn: Article[] = entries.map(([slug, , category], index) => ({
+  slug,
+  title: englishTitles[index],
+  category,
+  date: new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "long", year: "numeric" }).format(
+    new Date(2026, 6 - Math.floor(index / 6), Math.max(1, 1 + ((35 - index) % 27))),
+  ),
+  image: images[index % images.length],
+  excerpt: `${englishTitles[index]}: the practical steps and criteria that really matter when you want a cleaner pool, faster and with less effort.`,
+}));
+
+export const articleEnBySlug = new Map(articlesEn.map((article) => [article.slug, article]));
