@@ -9,6 +9,7 @@ import Counter from "@/components/Counter";
 import PressMarquee from "@/components/PressMarquee";
 import { Check, Cross } from "@/components/Marks";
 import GoogleMark from "@/components/GoogleMark";
+import GoogleWordmark from "@/components/GoogleWordmark";
 import Footer from "@/components/Footer";
 import { getLocale, localizedPath, type Locale } from "@/lib/i18n";
 
@@ -528,8 +529,9 @@ export default async function Home() {
                   text={es ? "Diez mil piscinas / y ni un solo *arrepentimiento*" : "Dix mille piscines, / et pas un *regret*"}
                 />
               </div>
-              <p className="reveal text-[0.9rem] text-ink/50">
-                <Counter value={4.9} decimals={1} /> {es ? "de 5 · opiniones de Google" : "sur 5 · avis Google"}
+              <p className="reveal flex items-center gap-1.5 text-[0.9rem] text-ink/50">
+                <span><Counter value={4.9} decimals={1} /> {es ? "de 5 · opiniones" : "sur 5 · avis"}</span>
+                <GoogleWordmark className="h-4 w-auto shrink-0" />
               </p>
             </div>
 
