@@ -11,6 +11,7 @@ export default function SweepHero() {
       aria-label="Platypool en action"
     >
       <video
+        data-hero-media
         className="absolute inset-0 h-full w-full -translate-y-[5%] scale-[1.18] object-cover sm:-translate-x-[10%] sm:-translate-y-[8%] sm:scale-[1.35]"
         autoPlay
         muted
@@ -33,7 +34,7 @@ export default function SweepHero() {
       />
 
       <div className="relative flex h-full flex-col justify-between px-5 pt-24 pb-6 text-paper sm:px-8 sm:pt-28 sm:pb-8">
-        <p className="meta max-w-[15rem] text-paper/75">
+        <p className="meta max-w-[15rem] text-paper/75" data-blur>
           Mougins, Côte d&apos;Azur — brevet FR, EU &amp; US
         </p>
 
@@ -43,13 +44,13 @@ export default function SweepHero() {
             className="display text-[clamp(2.5rem,7.5vw,6rem)]"
             text="Vingt minutes de corvée, / réduites à *une*."
           />
-          <p className="mt-7 max-w-md text-[0.98rem] leading-relaxed text-paper/80">
+          <p className="mt-7 max-w-md text-[0.98rem] leading-relaxed text-paper/80" data-blur>
             Vous la posez sur l&apos;eau, vous tirez sur une corde, vous marchez.
             C&apos;est tout ce qu&apos;il y a à faire.
           </p>
         </div>
 
-        <div>
+        <div className="reveal">
           <div
             className="waterline mb-4 bg-paper/25 [--sweep:100%]"
             aria-hidden="true"

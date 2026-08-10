@@ -37,10 +37,13 @@ export default function Reveal() {
     const proseBlocks = gsap.utils.toArray<HTMLElement>("[data-blur]");
     const lifts = gsap.utils.toArray<HTMLElement>(".reveal");
     const panels = gsap.utils.toArray<HTMLElement>("[data-expand]");
+    const wipes = gsap.utils.toArray<HTMLElement>("[data-wipe]");
+    const heroMedia = gsap.utils.toArray<HTMLElement>("[data-hero-media]");
 
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       gsap.set(lifts, SHOWN);
       gsap.set(".word", SHARP);
+      gsap.set(heroMedia, { filter: "none", opacity: 1 });
       panels.forEach((p) => p.classList.remove("expand"));
       return;
     }
@@ -48,18 +51,49 @@ export default function Reveal() {
     gsap.registerPlugin(ScrollTrigger);
     proseBlocks.forEach(splitWords);
 
+    const textBlocks = [...blurBlocks, ...proseBlocks];
+    const introHeading = textBlocks.find((block) => {
+      const rect = block.getBoundingClientRect();
+      return (
+        block.tagName === "H1" &&
+        rect.top < window.innerHeight * 0.85 &&
+        rect.bottom > 0
+      );
+    });
+    const nearIntro = (el: HTMLElement) => {
+      const rect = el.getBoundingClientRect();
+      return Boolean(
+        introHeading &&
+          rect.top < window.innerHeight * 1.05 &&
+          rect.bottom > 0,
+      );
+    };
+    const introLifts = new Set(lifts.filter(nearIntro));
+    const introWipes = new Set(wipes.filter(nearIntro));
+
     const ctx = gsap.context(() => {
+      heroMedia.forEach((media) => {
+        gsap.fromTo(
+          media,
+          { filter: "blur(12px)", opacity: 0.25 },
+          {
+            filter: "blur(0px)",
+            opacity: 1,
+            duration: 1.4,
+            ease: "power2.out",
+          },
+        );
+      });
+
       // 1. Headlines and body copy sharpen word by word, left to right.
-      [...blurBlocks, ...proseBlocks].forEach((block) => {
+      textBlocks.forEach((block) => {
         const words = block.querySelectorAll(".word");
         if (!words.length) return;
 
         const fast = block.hasAttribute("data-blur");
         const rect = block.getBoundingClientRect();
-        const pageIntro =
-          block.tagName === "H1" &&
-          rect.top < window.innerHeight * 0.85 &&
-          rect.bottom > 0;
+        const pageIntro = block === introHeading;
+        const supportingIntro = nearIntro(block) && !pageIntro;
 
         // Every page hero gets the signature landing animation that originally
         // belonged only to SweepHero: soft words resolve left to right while
@@ -75,6 +109,24 @@ export default function Reveal() {
               ease: "power2.out",
               stagger: 0.055,
               delay: 0.18,
+              onComplete: () => gsap.set(words, { willChange: "auto" }),
+            },
+          );
+          return;
+        }
+
+        if (supportingIntro) {
+          const beforeHeading = rect.top < (introHeading?.getBoundingClientRect().top ?? 0);
+          gsap.fromTo(
+            words,
+            { filter: "blur(9px)", opacity: 0.04, y: 6 },
+            {
+              ...SHARP,
+              y: 0,
+              duration: 0.65,
+              ease: "power2.out",
+              stagger: 0.018,
+              delay: beforeHeading ? 0.05 : 0.62,
               onComplete: () => gsap.set(words, { willChange: "auto" }),
             },
           );
@@ -130,7 +182,21 @@ export default function Reveal() {
       // 3. Each item owns its reveal. Grouping every sibling under one trigger
       //    made long tables and masonry reviews finish before later rows/cards
       //    had entered the viewport.
+      [...introLifts].forEach((el, index) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 24 },
+          {
+            ...SHOWN,
+            duration: 0.9,
+            delay: 0.42 + index * 0.08,
+            ease: "power3.out",
+          },
+        );
+      });
+
       lifts.forEach((el) => {
+        if (introLifts.has(el)) return;
         if (el.getBoundingClientRect().top < window.innerHeight * 0.88) {
           gsap.set(el, SHOWN);
           return;
@@ -151,7 +217,27 @@ export default function Reveal() {
 
       // 4. Images wipe open in the direction of the product's sweep. The image
       //    settles from a restrained scale at the same time for added depth.
-      gsap.utils.toArray<HTMLElement>("[data-wipe]").forEach((el) => {
+      introWipes.forEach((el) => {
+        const image = el.querySelector("img");
+        const timeline = gsap.timeline({ delay: 0.28 });
+        timeline.fromTo(
+          el,
+          { "--wipe": "100%" },
+          { "--wipe": "0%", duration: 1.15, ease: "power3.inOut" },
+          0,
+        );
+        if (image) {
+          timeline.fromTo(
+            image,
+            { scale: 1.06 },
+            { scale: 1, duration: 1.2, ease: "power2.out" },
+            0,
+          );
+        }
+      });
+
+      wipes.forEach((el) => {
+        if (introWipes.has(el)) return;
         const image = el.querySelector("img");
         const timeline = gsap.timeline({
           scrollTrigger: {
