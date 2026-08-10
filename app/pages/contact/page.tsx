@@ -12,7 +12,7 @@ export default function ContactPage() {
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
           <div>
             <p className="meta text-ink/40" data-blur>Nous écrire</p>
-            <Words as="h1" className="display mt-7 text-[clamp(2.8rem,6vw,5.2rem)]" text="Une question ? / Parlons-en *simplement*." />
+            <Words as="h1" className="display mt-7 text-[clamp(2.8rem,6vw,5.2rem)]" text="Une question ? / Parlons-en *simplement*" />
             <p className="mt-8 max-w-md text-ink/60" data-blur>Notre équipe est en France et répond généralement sous 48 heures ouvrées.</p>
             <div className="reveal mt-10 border-t border-ink/12 pt-6">
               <p className="meta text-ink/40">E-mail direct</p>

@@ -64,7 +64,7 @@ export default function ProductPage() {
             <Words
               as="h1"
               className="display mt-6 text-[clamp(2.5rem,5.5vw,4.6rem)]"
-              text="La piscine propre. / En un seul *tour*."
+              text="La piscine propre / En un seul *tour*"
             />
             <p className="mt-7 max-w-lg text-[1.05rem] leading-relaxed text-ink/65" data-blur>
               Deux mètres de filet flottant ratissent la surface pendant que les
@@ -92,7 +92,7 @@ export default function ProductPage() {
         <div className="mx-auto max-w-6xl">
           <div className="max-w-4xl">
             <p className="meta text-ink/40" data-blur>Tout ce qui change</p>
-            <Words className="display mt-7 text-[clamp(2rem,5vw,4rem)]" text="Pensée pour faire moins. / Et ramasser *beaucoup* plus." />
+            <Words className="display mt-7 text-[clamp(2rem,5vw,4rem)]" text="Pensée pour faire moins / Et ramasser *beaucoup* plus" />
           </div>
           <div className="mt-16 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {features.map(([value, copy], index) => (
@@ -116,7 +116,7 @@ export default function ProductPage() {
           </div>
           <div>
             <p className="meta text-ink/40" data-blur>Le geste</p>
-            <Words className="display mt-7 text-[clamp(2rem,4.6vw,3.6rem)]" text="Posez. Marchez. / *Profitez*." />
+            <Words className="display mt-7 text-[clamp(2rem,4.6vw,3.6rem)]" text="Posez / Marchez / *Profitez*" />
             <div className="mt-10 space-y-7">
               {[
                 ["01", "Posez-la sur l'eau", "La structure flotte naturellement, sans effort ni manche à porter."],
@@ -135,7 +135,7 @@ export default function ProductPage() {
 
       <section className="bg-aqua px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-10">
-          <Words className="display max-w-3xl text-[clamp(2.2rem,5vw,4rem)]" text="Vingt minutes deviennent / *une*." />
+          <Words className="display max-w-3xl text-[clamp(2.2rem,5vw,4rem)]" text="Vingt minutes deviennent / *une*" />
           <div className="reveal min-w-[18rem]"><ProductBuy variantId="50463396036950" price="69 €" compact /></div>
         </div>
       </section>

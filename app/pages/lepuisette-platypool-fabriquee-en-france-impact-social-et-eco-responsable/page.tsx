@@ -23,7 +23,7 @@ export default function StoryPage() {
       <section className="px-5 pb-24 pt-16 sm:px-8 sm:pb-32 sm:pt-24">
         <div className="mx-auto max-w-6xl">
           <p className="meta text-ink/40" data-blur>Mougins · Côte d&apos;Azur</p>
-          <Words as="h1" className="display mt-7 max-w-5xl text-[clamp(2.8rem,7vw,6.4rem)]" text="Un père, sa fille, / et beaucoup trop de *feuilles*." />
+          <Words as="h1" className="display mt-7 max-w-5xl text-[clamp(2.8rem,7vw,6.4rem)]" text="Un père, sa fille, / et beaucoup trop de *feuilles*" />
           <div className="reveal mt-14">
             <div className="wipe-mask overflow-hidden rounded-2xl" data-wipe>
               <Image src="/media/famille-portrait.webp" alt="Jean-Jacques et Gwenaëlle, inventeurs de Platypool" width={2000} height={1414} priority className="aspect-[16/9] w-full object-cover" sizes="92vw" />
@@ -36,7 +36,7 @@ export default function StoryPage() {
         <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
           <div>
             <p className="meta text-paper/40" data-blur>L&apos;origine</p>
-            <Words className="display mt-7 text-[clamp(2rem,4.5vw,3.7rem)]" text="Une idée simple / qui attendait son *moment*." />
+            <Words className="display mt-7 text-[clamp(2rem,4.5vw,3.7rem)]" text="Une idée simple / qui attendait son *moment*" />
           </div>
           <div className="space-y-6 text-[1.05rem] leading-relaxed text-paper/70">
             <p data-blur>
@@ -81,7 +81,7 @@ export default function StoryPage() {
         <div className="mx-auto max-w-6xl">
           <div className="max-w-4xl">
             <p className="meta text-ink/40" data-blur>Fabriquée en France</p>
-            <Words className="display mt-7 text-[clamp(2.2rem,5vw,4rem)]" text="Locale par choix. / Sociale par *conviction*." />
+            <Words className="display mt-7 text-[clamp(2.2rem,5vw,4rem)]" text="Locale par choix / Sociale par *conviction*" />
           </div>
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[

@@ -192,7 +192,7 @@ export default function Home() {
             <p className="meta text-ink/40" data-blur>Le problème, en une phrase</p>
             <Words
               className="display mx-auto mt-8 max-w-4xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Une épuisette classique fait 30 centimètres de large. / Votre piscine en fait quatre mille. / Le calcul est *vite* fait."
+              text="Une épuisette classique fait 30 centimètres de large / Votre piscine en fait quatre mille / Le calcul est *vite* fait"
             />
           </div>
 
@@ -226,7 +226,7 @@ export default function Home() {
             <p className="meta text-ink/40" data-blur>Ce qu&apos;elle fait</p>
             <Words
               className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Deux gestes que personne n'avait pensé à *réunir*."
+              text="Deux gestes que personne n'avait pensé à *réunir*"
             />
           </div>
 
@@ -372,7 +372,7 @@ export default function Home() {
             </p>
             <Words
               className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Mougins, 2020. Un hôtelier en a assez / de repêcher des *feuilles*."
+              text="Mougins, 2020 / Un hôtelier en a assez / de repêcher des *feuilles*"
             />
           </div>
 
@@ -502,7 +502,7 @@ export default function Home() {
                 </p>
                 <Words
                   className="display mt-6 text-[clamp(1.85rem,4.6vw,3.25rem)]"
-                  text="Dix mille piscines, / et pas un *regret*."
+                  text="Dix mille piscines, / et pas un *regret*"
                 />
               </div>
               <p className="reveal text-[0.9rem] text-ink/50">
@@ -541,7 +541,7 @@ export default function Home() {
               <p className="meta text-ink/40" data-blur>L&apos;épuisette XXL</p>
               <Words
                 className="display mt-6 text-[clamp(2rem,4.4vw,3.25rem)]"
-                text="Nettoyez moins, / profitez *plus*."
+                text="Nettoyez moins, / profitez *plus*"
               />
 
               <p className="figure reveal mt-10 text-[3.25rem]">
@@ -586,7 +586,7 @@ export default function Home() {
           <div className="mx-auto max-w-4xl">
             <Words
               className="display mb-10 text-[clamp(1.85rem,4.4vw,3rem)]"
-              text="Vous avez des *questions*."
+              text="Vous avez des *questions*"
             />
             <Faq />
           </div>

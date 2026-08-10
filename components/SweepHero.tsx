@@ -42,7 +42,7 @@ export default function SweepHero() {
           <Words
             as="h1"
             className="display text-[clamp(2.5rem,7.5vw,6rem)]"
-            text="Vingt minutes de corvée, / réduites à *une*."
+            text="Vingt minutes de corvée, / réduites à *une*"
           />
           <p className="mt-7 max-w-md text-[0.98rem] leading-relaxed text-paper/80" data-blur>
             Vous la posez sur l&apos;eau, vous tirez sur une corde, vous marchez.
