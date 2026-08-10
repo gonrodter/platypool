@@ -11,7 +11,7 @@ export default function SweepHero() {
       aria-label="Platypool en action"
     >
       <video
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full -translate-y-[5%] scale-[1.18] object-cover sm:-translate-x-[10%] sm:-translate-y-[8%] sm:scale-[1.35]"
         autoPlay
         muted
         loop
