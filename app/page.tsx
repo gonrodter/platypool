@@ -217,7 +217,7 @@ export default async function Home() {
         <SweepHero locale={locale} />
         <div id="nav-sentinel" aria-hidden="true" className="h-px w-full" />
 
-        {/* The claim, then the numbers hanging off the waterline beneath it. */}
+        {/* The claim, followed by the key product figures. */}
         <section
           id="produit"
           className="px-5 pt-28 pb-24 sm:px-8 sm:pt-40 sm:pb-32"
@@ -230,11 +230,6 @@ export default async function Home() {
           </div>
 
           <div className="mx-auto mt-24 max-w-6xl">
-            <div
-              className="waterline reveal [--sweep:0%]"
-              data-rule
-              aria-hidden="true"
-            />
             <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-12 lg:grid-cols-4">
               {specs.map((s) => (
                 <div key={s.label} className="reveal">

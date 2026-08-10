@@ -269,26 +269,7 @@ export default function Reveal() {
         }
       });
 
-      // 5. Hairlines draw across as you reach them.
-      gsap.utils.toArray<HTMLElement>("[data-rule]").forEach((el) => {
-        gsap.fromTo(
-          el,
-          { "--sweep": "0%" },
-          {
-            "--sweep": "100%",
-            ease: "none",
-            scrollTrigger: {
-              trigger: el,
-              start: "top 92%",
-              end: "top 45%",
-              scrub: 0.6,
-              invalidateOnRefresh: true,
-            },
-          },
-        );
-      });
-
-      // 6. Review photographs and medals keep a hint of movement after their
+      // 5. Review photographs and medals keep a hint of movement after their
       //    entrance. The range is intentionally small to avoid a template feel.
       gsap.utils
         .toArray<HTMLElement>("figure.reveal img, [data-award] img")

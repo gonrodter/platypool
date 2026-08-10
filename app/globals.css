@@ -8,7 +8,6 @@
   --aqua: #79ccd2;
   /* Same hue, dark enough for outlines and small type on paper. */
   --aqua-deep: #2f8d9b;
-  --rule: rgba(11, 42, 51, 0.16);
 }
 
 @theme inline {
@@ -100,21 +99,6 @@
 
   .pill:hover svg {
     transform: translateX(3px);
-  }
-
-  /* The waterline: the hairline sections hang from. */
-  .waterline {
-    position: relative;
-    height: 1px;
-    background: var(--rule);
-  }
-
-  .waterline::after {
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: var(--sweep, 0%);
-    background: var(--sweep-color, var(--aqua));
   }
 
   .field {
