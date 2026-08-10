@@ -10,15 +10,23 @@ import PressMarquee from "@/components/PressMarquee";
 import { Check, Cross } from "@/components/Marks";
 import GoogleMark from "@/components/GoogleMark";
 import Footer from "@/components/Footer";
+import { getLocale, localizedPath, type Locale } from "@/lib/i18n";
 
-const specs = [
+const specsFr = [
   { value: 2, unit: "m", label: "de filet, en un passage" },
   { value: 800, unit: "g", label: "se manie d'un seul doigt" },
   { value: 7, unit: "kg", label: "de feuilles par remplissage" },
   { value: 1, unit: "min", label: "de montage, sans outil" },
 ];
 
-const comparison = [
+const specsEs = [
+  { value: 2, unit: "m", label: "de red en una sola pasada" },
+  { value: 800, unit: "g", label: "se maneja con un solo dedo" },
+  { value: 7, unit: "kg", label: "de hojas en cada llenado" },
+  { value: 1, unit: "min", label: "de montaje, sin herramientas" },
+];
+
+const comparisonFr = [
   {
     criterion: "L'effort",
     before: "Épuise les bras et le dos",
@@ -46,6 +54,14 @@ const comparison = [
   },
 ];
 
+const comparisonEs = [
+  { criterion: "El esfuerzo", before: "Carga los brazos y la espalda", after: "Flota y tú solo tiras de una cuerda" },
+  { criterion: "El alcance", before: "30 cm y únicamente la superficie", after: "2 m, superficie y línea de agua a la vez" },
+  { criterion: "El tiempo", before: "Veinte pasadas para una piscina", after: "Una vuelta a la piscina, un minuto" },
+  { criterion: "La capacidad", before: "Hoja por hoja", after: "Hasta 7 kg en un solo llenado" },
+  { criterion: "La vida útil", before: "El mango se dobla y la red cede", after: "Diez años, con red y cepillos reemplazables" },
+];
+
 type Review = {
   quote: string;
   name: string;
@@ -56,7 +72,7 @@ type Review = {
   photo?: { src: string; alt: string };
 };
 
-const reviews: Review[] = [
+const reviewsFr: Review[] = [
   {
     quote:
       "Vraiment très satisfait. La piscine est propre en un temps record, facile d'utilisation et très performant. Je conseille.",
@@ -140,7 +156,19 @@ const reviews: Review[] = [
   },
 ];
 
-function ReviewCard({ review }: { review: Review }) {
+const reviewsEs: Review[] = [
+  { quote: "Estoy realmente muy satisfecho. La piscina queda limpia en un tiempo récord; es fácil de usar y muy eficaz. La recomiendo.", name: "Gérard S.", detail: "71 años · abril de 2026", photo: { src: "/media/avis-gerard.webp", alt: "Gérard limpia su piscina con Platypool" } },
+  { quote: "Este recogehojas es increíble. A mi familia le encanta; es una inversión estupenda para la piscina.", name: "Théotime Richard", detail: "Local Guide", google: true },
+  { quote: "Después de probarla, te preguntas cómo podías apañarte con un recogehojas de 30 cm.", name: "Julia V.", detail: "42 años · abril de 2026", photo: { src: "/media/avis-julia.webp", alt: "Julia saca la red Platypool de su piscina" } },
+  { quote: "Soy profesional de piscinas en el suroeste. Un gran descubrimiento y un ahorro de tiempo importante. Es verdad: en un minuto queda limpia.", name: "Antoine F.", detail: "32 años · marzo de 2026", photo: { src: "/media/avis-antoine.webp", alt: "Platypool en uso en una piscina del suroeste" } },
+  { quote: "Es una herramienta sencillamente increíble. Ligera, fácil de usar y muy eficaz. Mi piscina está siempre limpia.", name: "Sophie Brunet", detail: "opinión verificada", google: true },
+  { quote: "Piscina elevada redonda de 5 m: lo recoge todo antes de que caiga al fondo. La piscina está mucho más limpia.", name: "Christine H.", detail: "63 años · marzo de 2026", photo: { src: "/media/avis-christine.webp", alt: "Platypool sobre una piscina elevada redonda" } },
+  { quote: "Tenemos muchos problemas con las agujas de pino. Ahora las recogemos antes de que caigan al fondo, y solo tardamos dos minutos.", name: "Nicolas R.", detail: "46 años · agosto de 2025", photo: { src: "/media/avis-nicolas.webp", alt: "La red Platypool llena de agujas de pino" } },
+  { quote: "Es la innovación que hay que tener este verano. Sencilla, eficaz y ligera; en casa se nota muchísimo.", name: "Manon Nicot", detail: "clienta", google: true },
+  { quote: "Fue mi regalo del Día del Padre. ¡Está encantado! Quería una solución eficaz, fácil de usar y fácil de vaciar.", name: "Alex B.", detail: "23 años · agosto de 2025", photo: { src: "/media/avis-alex.webp", alt: "Platypool como regalo del Día del Padre" } },
+];
+
+function ReviewCard({ review, locale }: { review: Review; locale: Locale }) {
   return (
     <figure className="reveal mb-6 break-inside-avoid overflow-hidden rounded-2xl bg-paper/70">
       {review.photo ? (
@@ -162,7 +190,7 @@ function ReviewCard({ review }: { review: Review }) {
           {review.google ? (
             <span className="ml-auto flex shrink-0 items-center gap-1.5 text-ink/45">
               <GoogleMark className="h-3.5 w-3.5" />
-              <span className="meta">Avis Google</span>
+              <span className="meta">{locale === "es" ? "Opinión de Google" : "Avis Google"}</span>
             </span>
           ) : (
             <span className="meta text-ink/40">{review.detail}</span>
@@ -173,14 +201,19 @@ function ReviewCard({ review }: { review: Review }) {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const locale = await getLocale();
+  const es = locale === "es";
+  const specs = es ? specsEs : specsFr;
+  const comparison = es ? comparisonEs : comparisonFr;
+  const reviews = es ? reviewsEs : reviewsFr;
   return (
     <>
       <Nav />
       <Reveal />
 
       <main id="top">
-        <SweepHero />
+        <SweepHero locale={locale} />
         <div id="nav-sentinel" aria-hidden="true" className="h-px w-full" />
 
         {/* The claim, then the numbers hanging off the waterline beneath it. */}
@@ -189,10 +222,10 @@ export default function Home() {
           className="px-5 pt-28 pb-24 sm:px-8 sm:pt-40 sm:pb-32"
         >
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-ink/40" data-blur>Le problème, en une phrase</p>
+            <p className="meta text-ink/40" data-blur>{es ? "El problema, en una frase" : "Le problème, en une phrase"}</p>
             <Words
               className="display mx-auto mt-8 max-w-4xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Une épuisette classique fait 30 centimètres de large / Votre piscine en fait quatre mille / Le calcul est *vite* fait"
+              text={es ? "Un recogehojas clásico mide 30 centímetros de ancho / Tu piscina mide cuatro mil / Las cuentas salen *rápido*" : "Une épuisette classique fait 30 centimètres de large / Votre piscine en fait quatre mille / Le calcul est *vite* fait"}
             />
           </div>
 
@@ -223,10 +256,10 @@ export default function Home() {
         {/* Two-in-one, told as two image cards that read left to right. */}
         <section className="expand bg-stone px-5 py-24 sm:px-8 sm:py-32" data-expand>
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-ink/40" data-blur>Ce qu&apos;elle fait</p>
+            <p className="meta text-ink/40" data-blur>{es ? "Lo que hace" : "Ce qu'elle fait"}</p>
             <Words
               className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Deux gestes que personne n'avait pensé à *réunir*"
+              text={es ? "Dos gestos que nadie había pensado *unir*" : "Deux gestes que personne n'avait pensé à *réunir*"}
             />
           </div>
 
@@ -238,7 +271,7 @@ export default function Home() {
               >
                 <Image
                   src="/media/feuilles-surface.webp"
-                  alt="Le filet Platypool rassemble feuilles et insectes à la surface de l'eau"
+                  alt={es ? "La red Platypool recoge hojas e insectos de la superficie" : "Le filet Platypool rassemble feuilles et insectes à la surface de l'eau"}
                   width={1600}
                   height={1200}
                   className="aspect-4/3 w-full object-cover"
@@ -246,11 +279,9 @@ export default function Home() {
                 />
               </div>
               <figcaption className="mt-6">
-                <h3 className="display text-[1.6rem]" data-blur>La surface</h3>
+                <h3 className="display text-[1.6rem]" data-blur>{es ? "La superficie" : "La surface"}</h3>
                 <p className="mt-3 max-w-sm text-ink/65" data-blur>
-                  Deux mètres de filet balaient toute la largeur d&apos;un coup.
-                  Feuilles, insectes, aiguilles de pin, pollen — tout part avant
-                  de couler au fond.
+                  {es ? "Dos metros de red barren todo el ancho de una sola pasada. Hojas, insectos, agujas de pino y polen desaparecen antes de hundirse." : "Deux mètres de filet balaient toute la largeur d'un coup. Feuilles, insectes, aiguilles de pin, pollen — tout part avant de couler au fond."}
                 </p>
               </figcaption>
             </figure>
@@ -262,7 +293,7 @@ export default function Home() {
               >
                 <Image
                   src="/media/ligne-eau.webp"
-                  alt="Les brosses intégrées frottent la ligne d'eau du bassin"
+                  alt={es ? "Los cepillos integrados frotan la línea de agua de la piscina" : "Les brosses intégrées frottent la ligne d'eau du bassin"}
                   width={1600}
                   height={1600}
                   className="aspect-4/3 w-full object-cover"
@@ -270,11 +301,9 @@ export default function Home() {
                 />
               </div>
               <figcaption className="mt-6">
-                <h3 className="display text-[1.6rem]" data-blur>La ligne d&apos;eau</h3>
+                <h3 className="display text-[1.6rem]" data-blur>{es ? "La línea de agua" : "La ligne d'eau"}</h3>
                 <p className="mt-3 max-w-sm text-ink/65" data-blur>
-                  Les brosses des extrémités restent plaquées contre la paroi.
-                  La ligne grasse se nettoie pendant que vous ramassez, sans
-                  vous baisser.
+                  {es ? "Los cepillos de los extremos permanecen pegados a la pared. La línea de grasa se limpia mientras recoges la suciedad, sin agacharte." : "Les brosses des extrémités restent plaquées contre la paroi. La ligne grasse se nettoie pendant que vous ramassez, sans vous baisser."}
                 </p>
               </figcaption>
             </figure>
@@ -285,31 +314,31 @@ export default function Home() {
         <section className="px-5 py-24 sm:px-8 sm:py-32">
           <div className="mx-auto max-w-5xl text-center">
             <p className="meta text-ink/40" data-blur>
-              L&apos;épuisette d&apos;avant · Platypool
+              {es ? "El recogehojas de siempre · Platypool" : "L'épuisette d'avant · Platypool"}
             </p>
             <Words
               className="display mx-auto mt-8 text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Combien vaut un été sans *corvée* ?"
+              text={es ? "¿Cuánto vale un verano sin / *esfuerzo*?" : "Combien vaut un été sans *corvée* ?"}
             />
           </div>
 
           <div className="mx-auto mt-16 max-w-5xl overflow-x-auto">
             <table className="w-full min-w-xl border-collapse text-left">
               <caption className="sr-only">
-                Comparatif entre une épuisette classique et Platypool
+                {es ? "Comparativa entre un recogehojas clásico y Platypool" : "Comparatif entre une épuisette classique et Platypool"}
               </caption>
               <thead>
                 <tr className="border-b border-ink/15">
                   <th scope="col" className="meta w-1/4 py-4 text-ink/40">
-                    <span className="reveal block">Critère</span>
+                    <span className="reveal block">{es ? "Criterio" : "Critère"}</span>
                   </th>
                   <th scope="col" className="w-[37.5%] py-4 pr-6 align-bottom">
                     <span className="reveal block">
                       <span className="block text-[1.05rem] font-medium text-ink/45">
-                        L&apos;épuisette classique
+                        {es ? "Recogehojas clásico" : "L'épuisette classique"}
                       </span>
                       <span className="meta mt-1 block text-ink/35">
-                        10 à 40 €, chaque saison
+                        {es ? "De 10 a 40 €, cada temporada" : "10 à 40 €, chaque saison"}
                       </span>
                     </span>
                   </th>
@@ -322,7 +351,7 @@ export default function Home() {
                         Platypool
                       </span>
                       <span className="meta mt-1 block text-ink/50">
-                        69 €, une fois
+                        {es ? "69 €, una sola vez" : "69 €, une fois"}
                       </span>
                     </span>
                   </th>
@@ -368,11 +397,11 @@ export default function Home() {
         >
           <div className="mx-auto max-w-5xl text-center">
             <p className="meta text-paper/40" data-blur>
-              Née d&apos;une histoire de famille
+              {es ? "Nacida de una historia familiar" : "Née d'une histoire de famille"}
             </p>
             <Words
               className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text="Mougins, 2020 / Un hôtelier en a assez / de repêcher des *feuilles*"
+              text={es ? "Mougins, 2020 / Un hotelero se cansa / de pescar *hojas*" : "Mougins, 2020 / Un hôtelier en a assez / de repêcher des *feuilles*"}
             />
           </div>
 
@@ -384,7 +413,7 @@ export default function Home() {
               >
                 <Image
                   src="/media/flottante.webp"
-                  alt="Platypool tirée à la corde le long d'une piscine sur la Côte d'Azur"
+                  alt={es ? "Platypool guiada con una cuerda junto a una piscina de la Costa Azul" : "Platypool tirée à la corde le long d'une piscine sur la Côte d'Azur"}
                   width={1600}
                   height={1200}
                   className="aspect-4/3 w-full object-cover"
@@ -396,15 +425,10 @@ export default function Home() {
             <div className="lg:pt-4">
               <div className="max-w-xl space-y-5 text-paper/70">
                 <p data-blur>
-                  Jean-Jacques, inventeur dans l&apos;âme, cherchait de quoi
-                  nettoyer la piscine de son hôtel sans y passer sa matinée. Son
-                  fils teste le premier prototype en 2020 : c&apos;est le
-                  déclic.
+                  {es ? "Jean-Jacques, inventor de corazón, buscaba cómo limpiar la piscina de su hotel sin perder toda la mañana. Su hijo prueba el primer prototipo en 2020: ahí surge la chispa." : "Jean-Jacques, inventeur dans l'âme, cherchait de quoi nettoyer la piscine de son hôtel sans y passer sa matinée. Son fils teste le premier prototype en 2020 : c'est le déclic."}
                 </p>
                 <p data-blur>
-                  Deux ans plus tard, plus de 10 000 familles en France et en
-                  Europe l&apos;utilisent. Platypool est toujours fabriquée en
-                  France, et assemblée par l&apos;ESAT Les Tournesols à Colmar.
+                  {es ? "Dos años después, más de 10.000 familias de Francia y Europa la utilizan. Platypool sigue fabricándose en Francia y se ensambla en el ESAT Les Tournesols de Colmar." : "Deux ans plus tard, plus de 10 000 familles en France et en Europe l'utilisent. Platypool est toujours fabriquée en France, et assemblée par l'ESAT Les Tournesols à Colmar."}
                 </p>
               </div>
 
@@ -418,19 +442,19 @@ export default function Home() {
                   <p className="figure text-[clamp(1.9rem,3.5vw,2.75rem)]">
                     <Counter value={10000} />
                   </p>
-                  <p className="meta mt-3 text-paper/45">utilisateurs</p>
+                  <p className="meta mt-3 text-paper/45">{es ? "usuarios" : "utilisateurs"}</p>
                 </div>
                 <div className="reveal">
                   <p className="figure text-[clamp(1.9rem,3.5vw,2.75rem)]">
                     <Counter value={4.9} decimals={1} />
                   </p>
-                  <p className="meta mt-3 text-paper/45">avis Google</p>
+                  <p className="meta mt-3 text-paper/45">{es ? "en Google" : "avis Google"}</p>
                 </div>
                 <div className="reveal">
                   <p className="figure text-[clamp(1.9rem,3.5vw,2.75rem)]">
                     <Counter value={0} />
                   </p>
-                  <p className="meta mt-3 text-paper/45">retour SAV</p>
+                  <p className="meta mt-3 text-paper/45">{es ? "devoluciones posventa" : "retour SAV"}</p>
                 </div>
               </div>
             </div>
@@ -440,53 +464,52 @@ export default function Home() {
         {/* Awards: the assets that were buried on the old site. */}
         <section className="px-5 py-24 sm:px-8 sm:py-32">
           <div className="mx-auto max-w-6xl">
-            <p className="meta text-ink/40" data-blur>Reconnue, puis brevetée</p>
+            <p className="meta text-ink/40" data-blur>{es ? "Reconocida y después patentada" : "Reconnue, puis brevetée"}</p>
 
             <div className="mt-12 grid gap-10 md:grid-cols-3">
               <div className="reveal flex items-start gap-5" data-award>
                 <Image
                   src="/media/medaille-lepine.webp"
-                  alt="Deux médailles du Concours Lépine 2021"
+                  alt={es ? "Dos medallas del Concurso Lépine 2021" : "Deux médailles du Concours Lépine 2021"}
                   width={200}
                   height={200}
                   className="h-16 w-auto"
                 />
                 <div>
                   <h3 className="display text-[1.4rem]" data-blur>Concours Lépine</h3>
-                  <p className="meta mt-2 text-ink/45">Deux médailles · 2021</p>
+                  <p className="meta mt-2 text-ink/45">{es ? "Dos medallas" : "Deux médailles"} · 2021</p>
                 </div>
               </div>
 
               <div className="reveal flex items-start gap-5" data-award>
                 <Image
                   src="/media/medaille-geneve.webp"
-                  alt="Médaille d'or du Salon international des inventions de Genève"
+                  alt={es ? "Medalla de oro del Salón Internacional de Invenciones de Ginebra" : "Médaille d'or du Salon international des inventions de Genève"}
                   width={200}
                   height={200}
                   className="h-16 w-auto"
                 />
                 <div>
-                  <h3 className="display text-[1.4rem]" data-blur>Salon de Genève</h3>
+                  <h3 className="display text-[1.4rem]" data-blur>{es ? "Salón de Ginebra" : "Salon de Genève"}</h3>
                   <p className="meta mt-2 text-ink/45">
-                    Médaille d&apos;or · 2026
+                    {es ? "Medalla de oro" : "Médaille d'or"} · 2026
                   </p>
                 </div>
               </div>
 
               <div className="reveal">
-                <h3 className="display text-[1.4rem]" data-blur>Brevet accordé</h3>
+                <h3 className="display text-[1.4rem]" data-blur>{es ? "Patente concedida" : "Brevet accordé"}</h3>
                 <p className="meta mt-2 text-ink/45">
-                  Europe, États-Unis, Australie
+                  {es ? "Europa, Estados Unidos y Australia" : "Europe, États-Unis, Australie"}
                 </p>
                 <p className="mt-3 max-w-xs text-[0.9rem] text-ink/60">
-                  Les trois territoires couvrent 85 % du marché mondial de la
-                  piscine.
+                  {es ? "Los tres territorios cubren el 85 % del mercado mundial de piscinas." : "Les trois territoires couvrent 85 % du marché mondial de la piscine."}
                 </p>
               </div>
             </div>
 
             <div className="mt-16 border-t border-ink/12 pt-10">
-              <p className="meta reveal mb-8 text-ink/35">Vue dans</p>
+              <p className="meta reveal mb-8 text-ink/35">{es ? "Vista en" : "Vue dans"}</p>
               <PressMarquee />
             </div>
           </div>
@@ -498,21 +521,21 @@ export default function Home() {
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
                 <p className="meta text-ink/40" data-blur>
-                  Ce qu&apos;ils en disent
+                  {es ? "Lo que cuentan" : "Ce qu'ils en disent"}
                 </p>
                 <Words
                   className="display mt-6 text-[clamp(1.85rem,4.6vw,3.25rem)]"
-                  text="Dix mille piscines, / et pas un *regret*"
+                  text={es ? "Diez mil piscinas / y ni un solo *arrepentimiento*" : "Dix mille piscines, / et pas un *regret*"}
                 />
               </div>
               <p className="reveal text-[0.9rem] text-ink/50">
-                <Counter value={4.9} decimals={1} /> sur 5 · avis Google
+                <Counter value={4.9} decimals={1} /> {es ? "de 5 · opiniones de Google" : "sur 5 · avis Google"}
               </p>
             </div>
 
             <div className="mt-14 gap-6 md:columns-2 lg:columns-3">
               {reviews.map((r) => (
-                <ReviewCard key={r.name} review={r} />
+                <ReviewCard key={r.name} review={r} locale={locale} />
               ))}
             </div>
           </div>
@@ -528,7 +551,7 @@ export default function Home() {
               >
                 <Image
                   src="/media/contenu-boite.webp"
-                  alt="Contenu de la boîte Platypool : tubes, extendeurs à brosses, filet et corde"
+                  alt={es ? "Contenido de la caja Platypool: tubos, extensores con cepillos, red y cuerda" : "Contenu de la boîte Platypool : tubes, extendeurs à brosses, filet et corde"}
                   width={1600}
                   height={1200}
                   className="aspect-4/3 w-full object-cover"
@@ -538,45 +561,44 @@ export default function Home() {
             </div>
 
             <div>
-              <p className="meta text-ink/40" data-blur>L&apos;épuisette XXL</p>
+              <p className="meta text-ink/40" data-blur>{es ? "El recogehojas XXL" : "L'épuisette XXL"}</p>
               <Words
                 className="display mt-6 text-[clamp(2rem,4.4vw,3.25rem)]"
-                text="Nettoyez moins, / profitez *plus*"
+                text={es ? "Limpia menos / disfruta *más*" : "Nettoyez moins, / profitez *plus*"}
               />
 
               <p className="figure reveal mt-10 text-[3.25rem]">
                 <Counter value={69} />
                 <span className="ml-1 text-[0.32em] tracking-normal">
-                  € TTC
+                  € {es ? "IVA incl." : "TTC"}
                 </span>
               </p>
 
               <ul className="mt-8 space-y-2 text-ink/65">
                 <li data-blur>
-                  4 tubes de 50 cm, 2 extendeurs à brosses pré-montées
+                  {es ? "4 tubos de 50 cm y 2 extensores con cepillos premontados" : "4 tubes de 50 cm, 2 extendeurs à brosses pré-montées"}
                 </li>
                 <li data-blur>
-                  1 filet de 2 mètres, 1 corde et ses 4 crochets
+                  {es ? "1 red de 2 metros, 1 cuerda y sus 4 ganchos" : "1 filet de 2 mètres, 1 corde et ses 4 crochets"}
                 </li>
                 <li data-blur>
-                  Montage en 4 étapes, une minute, sans outil
+                  {es ? "Montaje en 4 pasos, un minuto y sin herramientas" : "Montage en 4 étapes, une minute, sans outil"}
                 </li>
                 <li data-blur>
-                  Matériaux anti-UV, résistants au chlore, recyclables
+                  {es ? "Materiales anti-UV, resistentes al cloro y reciclables" : "Matériaux anti-UV, résistants au chlore, recyclables"}
                 </li>
               </ul>
 
               <a
-                href="/products/epuisette-xxl"
+                href={localizedPath(locale, "/products/epuisette-xxl")}
                 className="pill reveal mt-10 bg-aqua text-ink hover:bg-ink hover:text-paper"
               >
-                Ajouter au panier
+                {es ? "Añadir al carrito" : "Ajouter au panier"}
                 <Arrow />
               </a>
 
               <p className="meta reveal mt-6 text-ink/40">
-                Point Relais DPD · 14 jours pour changer d&apos;avis · garantie
-                2 ans
+                {es ? "Punto de recogida DPD · 14 días para cambiar de opinión · 2 años de garantía" : "Point Relais DPD · 14 jours pour changer d'avis · garantie 2 ans"}
               </p>
             </div>
           </div>
@@ -586,7 +608,7 @@ export default function Home() {
           <div className="mx-auto max-w-4xl">
             <Words
               className="display mb-10 text-[clamp(1.85rem,4.4vw,3rem)]"
-              text="Vous avez des *questions*"
+              text={es ? "¿Tienes alguna *pregunta*?" : "Vous avez des *questions*"}
             />
             <Faq />
           </div>

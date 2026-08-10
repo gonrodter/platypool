@@ -1,19 +1,22 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
+import { usePathname } from "next/navigation";
 import Arrow from "@/components/Arrow";
 
 type Props = { withdrawal?: boolean };
 
 export default function ContactForm({ withdrawal = false }: Props) {
   const [sent, setSent] = useState(false);
+  const pathname = usePathname();
+  const es = pathname === "/es" || pathname.startsWith("/es/");
 
   const submit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const subject = withdrawal
-      ? `Rétractation — commande ${data.get("commande") ?? ""}`
-      : `Contact Platypool — ${data.get("nom") ?? ""}`;
+      ? `${es ? "Desistimiento — pedido" : "Rétractation — commande"} ${data.get("commande") ?? ""}`
+      : `${es ? "Contacto Platypool" : "Contact Platypool"} — ${data.get("nom") ?? ""}`;
     const body = [...data.entries()]
       .map(([key, value]) => `${key}: ${String(value)}`)
       .join("\n");
@@ -24,7 +27,7 @@ export default function ContactForm({ withdrawal = false }: Props) {
   return (
     <form onSubmit={submit} className="grid gap-5 sm:grid-cols-2">
       <label>
-        <span className="meta mb-2 block text-ink/45">Nom et prénom</span>
+        <span className="meta mb-2 block text-ink/45">{es ? "Nombre y apellidos" : "Nom et prénom"}</span>
         <input className="field" name="nom" required autoComplete="name" />
       </label>
       <label>
@@ -34,17 +37,17 @@ export default function ContactForm({ withdrawal = false }: Props) {
       {withdrawal ? (
         <>
           <label>
-            <span className="meta mb-2 block text-ink/45">Nº de commande</span>
+            <span className="meta mb-2 block text-ink/45">{es ? "N.º de pedido" : "Nº de commande"}</span>
             <input className="field" name="commande" required />
           </label>
           <label>
-            <span className="meta mb-2 block text-ink/45">Date de commande</span>
+            <span className="meta mb-2 block text-ink/45">{es ? "Fecha del pedido" : "Date de commande"}</span>
             <input className="field" name="date" type="date" />
           </label>
         </>
       ) : (
         <label className="sm:col-span-2">
-          <span className="meta mb-2 block text-ink/45">Téléphone · facultatif</span>
+          <span className="meta mb-2 block text-ink/45">{es ? "Teléfono · opcional" : "Téléphone · facultatif"}</span>
           <input className="field" name="telephone" type="tel" autoComplete="tel" />
         </label>
       )}
@@ -54,9 +57,9 @@ export default function ContactForm({ withdrawal = false }: Props) {
       </label>
       <div className="flex flex-wrap items-center gap-5 sm:col-span-2">
         <button type="submit" className="pill bg-aqua text-ink hover:bg-ink hover:text-paper">
-          {withdrawal ? "Préparer ma demande" : "Préparer mon e-mail"} <Arrow />
+          {withdrawal ? (es ? "Preparar mi solicitud" : "Préparer ma demande") : (es ? "Preparar mi correo" : "Préparer mon e-mail")} <Arrow />
         </button>
-        {sent ? <p className="text-sm text-ink/55">Votre messagerie va s&apos;ouvrir avec le message prérempli.</p> : null}
+        {sent ? <p className="text-sm text-ink/55">{es ? "Tu aplicación de correo se abrirá con el mensaje preparado" : "Votre messagerie va s'ouvrir avec le message prérempli"}</p> : null}
       </div>
     </form>
   );

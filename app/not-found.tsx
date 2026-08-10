@@ -1,6 +1,9 @@
 import PageChrome from "@/components/PageChrome";
 import Link from "next/link";
+import { getLocale, localizedPath } from "@/lib/i18n";
 
-export default function NotFound() {
-  return <PageChrome><section className="flex min-h-[70vh] items-center px-5 py-24 sm:px-8"><div className="mx-auto max-w-4xl text-center"><p className="meta text-ink/40">404 · page introuvable</p><h1 className="display mt-7 text-[clamp(3rem,8vw,7rem)]" data-blur>Cette page a pris l&apos;eau</h1><Link href="/" className="pill mt-10 bg-aqua text-ink hover:bg-ink hover:text-paper">Retour à l&apos;accueil</Link></div></section></PageChrome>;
+export default async function NotFound() {
+  const locale = await getLocale();
+  const es = locale === "es";
+  return <PageChrome><section className="flex min-h-[70vh] items-center px-5 py-24 sm:px-8"><div className="mx-auto max-w-4xl text-center"><p className="meta text-ink/40">404 · {es ? "página no encontrada" : "page introuvable"}</p><h1 className="display mt-7 text-[clamp(3rem,8vw,7rem)]" data-blur>{es ? "Esta página se ha ido a pique" : "Cette page a pris l'eau"}</h1><Link href={localizedPath(locale, "/")} className="pill mt-10 bg-aqua text-ink hover:bg-ink hover:text-paper">{es ? "Volver al inicio" : "Retour à l'accueil"}</Link></div></section></PageChrome>;
 }

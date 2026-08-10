@@ -1,14 +1,19 @@
-import type { Metadata } from "next";
 import PageChrome from "@/components/PageChrome";
 import Words from "@/components/Words";
 import Arrow from "@/components/Arrow";
+import { getLocale, localizedMetadata } from "@/lib/i18n";
 
-export const metadata: Metadata = { title: "Informations légales — Platypool" };
+export const generateMetadata = () => localizedMetadata(
+  { title: "Informations légales — Platypool" },
+  { title: "Información legal — Platypool" },
+);
 
 const policies = [
   ["Confidentialité", "privacy-policy"], ["Mentions légales", "legal-notice"], ["Remboursement", "refund-policy"], ["Expédition", "shipping-policy"], ["Conditions de vente", "terms-of-sale"], ["Coordonnées", "contact-information"], ["Conditions d'utilisation", "terms-of-service"],
 ];
 
-export default function PoliciesPage() {
-  return <PageChrome><section className="px-5 py-20 sm:px-8 sm:py-28"><div className="mx-auto max-w-6xl"><p className="meta text-ink/40" data-blur>Transparence</p><Words as="h1" className="display mt-7 max-w-4xl text-[clamp(2.8rem,6vw,5rem)]" text="Tout ce qui mérite / d'être lu *clairement*" /><div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{policies.map(([label,slug])=><a key={slug} href={`https://www.platypool.com/policies/${slug}`} className="reveal group flex min-h-40 flex-col justify-between rounded-2xl border border-ink/12 p-6 transition-colors hover:bg-stone"><span className="meta text-ink/35">Document officiel</span><span className="flex items-end justify-between gap-6"><span className="display text-2xl">{label}</span><Arrow /></span></a>)}</div><p className="mt-8 max-w-2xl text-sm text-ink/45" data-blur>Ces documents ouvrent leur version officielle actuellement publiée par Platypool afin de toujours présenter le texte contractuel à jour.</p></div></section></PageChrome>;
+export default async function PoliciesPage() {
+  const es = (await getLocale()) === "es";
+  const labels = es ? ["Privacidad", "Aviso legal", "Reembolsos", "Envíos", "Condiciones de venta", "Datos de contacto", "Condiciones de uso"] : policies.map(([label]) => label);
+  return <PageChrome><section className="px-5 py-20 sm:px-8 sm:py-28"><div className="mx-auto max-w-6xl"><p className="meta text-ink/40" data-blur>{es ? "Transparencia" : "Transparence"}</p><Words as="h1" className="display mt-7 max-w-4xl text-[clamp(2.8rem,6vw,5rem)]" text={es ? "Todo lo que merece / leerse con *claridad*" : "Tout ce qui mérite / d'être lu *clairement*"} /><div className="mt-16 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{policies.map(([,slug], index)=><a key={slug} href={`https://www.platypool.com/policies/${slug}`} className="reveal group flex min-h-40 flex-col justify-between rounded-2xl border border-ink/12 p-6 transition-colors hover:bg-stone"><span className="meta text-ink/35">{es ? "Documento oficial" : "Document officiel"}</span><span className="flex items-end justify-between gap-6"><span className="display text-2xl">{labels[index]}</span><Arrow /></span></a>)}</div><p className="mt-8 max-w-2xl text-sm text-ink/45" data-blur>{es ? "Estos enlaces abren la versión oficial publicada actualmente por Platypool para mostrar siempre el texto contractual vigente." : "Ces documents ouvrent leur version officielle actuellement publiée par Platypool afin de toujours présenter le texte contractuel à jour."}</p></div></section></PageChrome>;
 }

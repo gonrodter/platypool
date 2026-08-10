@@ -67,3 +67,62 @@ export const articles: Article[] = entries.map(([slug, title, category], index) 
 }));
 
 export const articleBySlug = new Map(articles.map((article) => [article.slug, article]));
+
+const spanishTitles = [
+  "Innovación francesa: los accesorios de piscina que cambian el mantenimiento",
+  "¿Qué anchura de recogehojas elegir?",
+  "Recogehojas de piscina sólido y anti-UV: cómo elegirlo",
+  "Un recogehojas compatible con todas las piscinas",
+  "Mantenimiento de la piscina sin robot: guía práctica",
+  "Limpieza rápida de la piscina en diez minutos",
+  "Los accesorios de piscina que realmente ahorran tiempo",
+  "¿Recogehojas XXL o robot de piscina?",
+  "Cómo eliminar fácilmente el polen de la piscina",
+  "Guía de mantenimiento de la superficie de la piscina",
+  "¿Necesitas un recogehojas XXL para tu piscina?",
+  "Recogehojas XXL para piscina: opiniones y criterios útiles",
+  "¿Qué recogehojas elegir para una piscina enterrada?",
+  "Recogehojas ancho o recogehojas clásico",
+  "Cómo mantener una piscina cada día",
+  "Guía para elegir tu recogehojas de piscina",
+  "Cómo limpiar la línea de agua de la piscina",
+  "Cómo retirar las hojas de la superficie de la piscina",
+  "Cómo elegir mejor un recogehojas de piscina",
+  "Los mejores recogehojas para una piscina grande",
+  "Cómo limpiar la piscina en dos minutos",
+  "Platypool frente al recogehojas clásico",
+  "Cómo limpiar la piscina en dos minutos",
+  "Un accesorio de piscina realmente fácil de usar",
+  "Por qué elegir un recogehojas fabricado en Francia",
+  "¿Cuál es el mejor recogehojas de piscina?",
+  "Cómo recoger agujas de pino de la piscina",
+  "Cómo retirar el polen de la piscina",
+  "Elegir un recogehojas que también limpie la línea de agua",
+  "La limpieza diaria de la piscina sin esfuerzo",
+  "El accesorio de mantenimiento que ahorra tiempo",
+  "Cómo elegir un recogehojas antihojas",
+  "¿Qué recogehojas elegir para una piscina grande?",
+  "Cómo limpiar rápidamente la superficie del agua",
+  "Cómo quitar las hojas de la piscina",
+  "Cómo limpiar la línea de agua de la piscina",
+];
+
+const categoriesEs: Record<Article["category"], Article["category"]> = {
+  Entretien: "Entretien",
+  "Bien choisir": "Bien choisir",
+  Comparatif: "Comparatif",
+  Innovation: "Innovation",
+};
+
+export const articlesEs: Article[] = entries.map(([slug, , category], index) => ({
+  slug,
+  title: spanishTitles[index],
+  category: categoriesEs[category],
+  date: new Intl.DateTimeFormat("es-ES", { day: "numeric", month: "long", year: "numeric" }).format(
+    new Date(2026, 6 - Math.floor(index / 6), Math.max(1, 1 + ((35 - index) % 27))),
+  ),
+  image: images[index % images.length],
+  excerpt: `${spanishTitles[index]}: los gestos y criterios que de verdad importan para mantener la piscina limpia más rápido y con menos esfuerzo.`,
+}));
+
+export const articleEsBySlug = new Map(articlesEs.map((article) => [article.slug, article]));

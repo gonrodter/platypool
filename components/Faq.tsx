@@ -1,10 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 
 type Entry = { q: string; a: React.ReactNode };
 
-const entries: Entry[] = [
+const entriesFr: Entry[] = [
   {
     q: "Est-ce facile à utiliser ?",
     a: (
@@ -84,8 +85,41 @@ const entries: Entry[] = [
   },
 ];
 
+const entriesEs: Entry[] = [
+  {
+    q: "¿Es fácil de usar?",
+    a: <><p>La colocas sobre el agua y tiras de la cuerda mientras caminas alrededor de la piscina. Flota y recoge todo a su paso.</p><p>Para sacarla, tiras de la cuerda, la sacudes en una esquina y la dejas secar. Una vez seca, basta con volver a sacudirla para eliminar el polen.</p></>,
+  },
+  {
+    q: "¿Necesito herramientas para montarla?",
+    a: <p>No. Se monta una sola vez al recibirla, en 4 pasos y sin herramientas. Solo necesitas un minuto. También puedes desmontarla y guardarla en su caja durante el invierno.</p>,
+  },
+  {
+    q: "¿Es compatible con todas las piscinas?",
+    a: <p>Sí: enterradas o elevadas, de liner, azulejo, hormigón o madera, de cualquier forma y tamaño. Si mide más de 4 metros de ancho, basta con hacer dos pasadas.</p>,
+  },
+  {
+    q: "¿Platypool sustituye a un robot?",
+    a: <p>No: Platypool limpia la superficie y la línea de agua; el robot limpia el fondo. Se complementan. Al usar Platypool con regularidad, llegan menos hojas al fondo y el robot trabaja menos.</p>,
+  },
+  {
+    q: "¿Qué hago si la red se perfora o los cepillos se desgastan?",
+    a: <p>Todos los elementos son sustituibles y el servicio de atención al cliente está en Francia. De más de 10.000 Platypool vendidas, todavía no se ha recibido ninguna devolución posventa. Si surge un problema, enviamos la pieza de inmediato y sin coste.</p>,
+  },
+  {
+    q: "¿Qué incluye la caja?",
+    a: <p>4 tubos de 50 cm, 2 extensores con cepillos premontados, 1 red de 2 metros y 1 cuerda con 4 ganchos ya fijados. Caja de 52 × 17 cm y 1,2 kg.</p>,
+  },
+  {
+    q: "¿Cómo funcionan el envío, las devoluciones y la garantía?",
+    a: <p>El punto de recogida DPD se elige después del pago —hay más de 8.500 en Francia—. Dispones de 14 días para cambiar de opinión sobre un producto sin usar y en su embalaje original. El reembolso se realiza en los 7 días posteriores a su recepción y la garantía del fabricante es de 2 años.</p>,
+  },
+];
+
 export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
+  const pathname = usePathname();
+  const entries = pathname === "/es" || pathname.startsWith("/es/") ? entriesEs : entriesFr;
 
   return (
     <div className="border-t border-ink/12">

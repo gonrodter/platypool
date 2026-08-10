@@ -4,22 +4,33 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
-const links = [
-  { href: "/", label: "Accueil" },
-  { href: "/products/epuisette-xxl", label: "L'épuisette" },
-  {
-    href: "/pages/lepuisette-platypool-fabriquee-en-france-impact-social-et-eco-responsable",
-    label: "L'histoire",
-  },
-  { href: "/blogs/infos", label: "Conseils" },
-  { href: "/pages/contact", label: "Contact" },
-];
+const links = {
+  fr: [
+    ["/", "Accueil"],
+    ["/products/epuisette-xxl", "L'épuisette"],
+    ["/pages/lepuisette-platypool-fabriquee-en-france-impact-social-et-eco-responsable", "L'histoire"],
+    ["/blogs/infos", "Conseils"],
+    ["/pages/contact", "Contact"],
+  ],
+  es: [
+    ["/", "Inicio"],
+    ["/products/epuisette-xxl", "El recogehojas"],
+    ["/pages/lepuisette-platypool-fabriquee-en-france-impact-social-et-eco-responsable", "La historia"],
+    ["/blogs/infos", "Consejos"],
+    ["/pages/contact", "Contacto"],
+  ],
+} as const;
 
 export default function Nav() {
   const pathname = usePathname();
-  const home = pathname === "/";
+  const locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : "es";
+  const pathWithoutLocale = pathname.replace(/^\/(es|fr)(?=\/|$)/, "") || "/";
+  const home = pathWithoutLocale === "/";
   const [pastHero, setPastHero] = useState(false);
   const solid = !home || pastHero;
+  const localize = (path: string) => path === "/" ? `/${locale}` : `/${locale}${path}`;
+  const switchTo = locale === "es" ? "fr" : "es";
+  const switchHref = pathWithoutLocale === "/" ? `/${switchTo}` : `/${switchTo}${pathWithoutLocale}`;
 
   useEffect(() => {
     if (!home) return;
@@ -48,11 +59,11 @@ export default function Nav() {
           : "bg-transparent text-paper"
       }`}
     >
-      <div className="flex items-center justify-between px-5 py-4 sm:px-8">
+      <div className="flex items-center justify-between px-3 py-4 min-[360px]:px-5 sm:px-8">
         {/* Two files rather than a filter: the wave in the A must keep its
             colour on light ground and disappear into white on the video. */}
-        <a href={home ? "#top" : "/"} className="relative block h-4 w-[9.5rem] sm:h-5 sm:w-[11.5rem]">
-          <span className="sr-only">Platypool — accueil</span>
+        <a href={home ? "#top" : localize("/")} className="relative block h-4 w-[9.5rem] sm:h-5 sm:w-[11.5rem]">
+          <span className="sr-only">Platypool — {locale === "es" ? "inicio" : "accueil"}</span>
           <Image
             src="/media/logo-platypool.webp"
             alt=""
@@ -76,23 +87,36 @@ export default function Nav() {
         </a>
 
         <nav className="hidden items-center gap-7 lg:flex" aria-label="Principal">
-          {links.map((l) => (
-            <a key={l.href} href={l.href} className="meta hover:opacity-60">
-              {l.label}
+          {links[locale].map(([href, label]) => (
+            <a key={href} href={localize(href)} className="meta hover:opacity-60">
+              {label}
             </a>
           ))}
         </nav>
 
-        <a
-          href="/products/epuisette-xxl"
-          className={`meta rounded-full px-4 py-2 transition-colors ${
-            solid
-              ? "bg-aqua text-ink hover:bg-ink hover:text-paper"
-              : "bg-paper/15 text-paper backdrop-blur-sm hover:bg-paper/30"
-          }`}
-        >
-          Acheter · 69 €
-        </a>
+        <div className="flex items-center gap-2">
+          <a
+            href={switchHref}
+            className={`meta whitespace-nowrap rounded-full border px-3 py-2 transition-colors ${
+              solid
+                ? "border-ink/15 hover:bg-ink hover:text-paper"
+                : "border-paper/25 bg-paper/10 text-paper backdrop-blur-sm hover:bg-paper/25"
+            }`}
+            aria-label={locale === "es" ? "Cambiar a francés" : "Passer en espagnol"}
+          >
+            {locale === "es" ? "ES · FR" : "FR · ES"}
+          </a>
+          <a
+            href={localize("/products/epuisette-xxl")}
+            className={`meta whitespace-nowrap rounded-full px-4 py-2 transition-colors ${
+              solid
+                ? "bg-aqua text-ink hover:bg-ink hover:text-paper"
+                : "bg-paper/15 text-paper backdrop-blur-sm hover:bg-paper/30"
+            }`}
+          >
+            {locale === "es" ? "Comprar" : "Acheter"}<span className="max-[359px]:hidden"> · 69 €</span>
+          </a>
+        </div>
       </div>
       <div
         className={`h-px transition-colors duration-500 ${
