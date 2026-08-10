@@ -146,7 +146,7 @@ export default async function ProductPage() {
       <section className="bg-aqua px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto flex max-w-6xl flex-wrap items-end justify-between gap-10">
           <Words className="display max-w-3xl text-[clamp(2.2rem,5vw,4rem)]" text={es ? "Veinte minutos se convierten / en *uno*" : "Vingt minutes deviennent / *une*"} />
-          <div className="reveal min-w-[18rem]"><ProductBuy variantId="50463396036950" price="69 €" compact /></div>
+          <div className="reveal min-w-[18rem]"><ProductBuy variantId="50463396036950" price="69 €" compact contrast /></div>
         </div>
       </section>
     </PageChrome>

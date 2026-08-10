@@ -8,9 +8,10 @@ type Props = {
   variantId: string;
   price: string;
   compact?: boolean;
+  contrast?: boolean;
 };
 
-export default function ProductBuy({ variantId, price, compact = false }: Props) {
+export default function ProductBuy({ variantId, price, compact = false, contrast = false }: Props) {
   const [quantity, setQuantity] = useState(1);
   const pathname = usePathname();
   const es = pathname === "/es" || pathname.startsWith("/es/");
@@ -48,7 +49,11 @@ export default function ProductBuy({ variantId, price, compact = false }: Props)
       </div>
       <a
         href={checkout}
-        className="pill mt-7 w-full justify-center bg-aqua text-ink hover:bg-ink hover:text-paper"
+        className={`pill mt-7 w-full justify-center ${
+          contrast
+            ? "bg-ink text-paper hover:bg-paper hover:text-ink"
+            : "bg-aqua text-ink hover:bg-ink hover:text-paper"
+        }`}
       >
         {es ? "Añadir al carrito" : "Ajouter au panier"} <Arrow />
       </a>
