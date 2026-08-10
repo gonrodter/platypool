@@ -567,7 +567,7 @@ export default function Home() {
               </ul>
 
               <a
-                href="https://www.platypool.com/products/epuisette-xxl"
+                href="/products/epuisette-xxl"
                 className="pill reveal mt-10 bg-aqua text-ink hover:bg-ink hover:text-paper"
               >
                 Ajouter au panier
