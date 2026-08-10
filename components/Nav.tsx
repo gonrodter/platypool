@@ -150,7 +150,14 @@ export default function Nav() {
               }`}
               aria-label={t.language}
             >
-              {locale.toUpperCase()} <span className="text-[0.7rem] transition-transform group-open:rotate-180">↓</span>
+              {locale.toUpperCase()}
+              <svg
+                aria-hidden="true"
+                viewBox="0 0 10 6"
+                className="h-1.5 w-2.5 fill-none stroke-current stroke-[1.5] transition-transform duration-300 group-open:rotate-180"
+              >
+                <path d="m1 1 4 4 4-4" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </summary>
             <div className={`absolute right-0 mt-2 min-w-36 overflow-hidden rounded-2xl border p-1 shadow-xl ${solid ? "border-ink/10 bg-paper text-ink" : "border-paper/15 bg-deep/95 text-paper backdrop-blur-md"}`}>
               {(["es", "fr", "en"] as const).map((target) => (
