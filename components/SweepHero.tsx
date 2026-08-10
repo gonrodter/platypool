@@ -52,8 +52,7 @@ export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
         </div>
 
         <div className="reveal">
-          <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
-            <p className="meta text-paper/70">{es ? "Platypool en acción · reproducción en bucle" : "Platypool en action · lecture en boucle"}</p>
+          <div className="flex flex-wrap items-end justify-end gap-x-8 gap-y-3">
             <a
               href="#acheter"
               className="group inline-flex items-baseline gap-3 border-b border-paper/40 pb-1 transition-colors hover:border-paper"
