@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 
 const links = [
+  { href: "/", label: "Accueil" },
   { href: "/products/epuisette-xxl", label: "L'épuisette" },
   {
     href: "/pages/lepuisette-platypool-fabriquee-en-france-impact-social-et-eco-responsable",
