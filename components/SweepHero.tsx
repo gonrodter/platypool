@@ -51,10 +51,6 @@ export default function SweepHero() {
         </div>
 
         <div className="reveal">
-          <div
-            className="waterline mb-4 bg-paper/25 [--sweep:100%]"
-            aria-hidden="true"
-          />
           <div className="flex flex-wrap items-end justify-between gap-x-8 gap-y-3">
             <p className="meta text-paper/70">Platypool en action · lecture en boucle</p>
             <a
