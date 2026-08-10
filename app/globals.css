@@ -1,26 +1,212 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --paper: #f4f3ef;
+  --stone: #e3ded1;
+  --ink: #0b2a33;
+  --deep: #06181e;
+  --aqua: #79ccd2;
+  /* Same hue, dark enough for outlines and small type on paper. */
+  --aqua-deep: #2f8d9b;
+  --rule: rgba(11, 42, 51, 0.16);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-paper: var(--paper);
+  --color-stone: var(--stone);
+  --color-ink: var(--ink);
+  --color-deep: var(--deep);
+  --color-aqua: var(--aqua);
+  --color-aqua-deep: var(--aqua-deep);
+  --font-sans: var(--font-figtree);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-figtree), ui-sans-serif, system-ui, sans-serif;
+    font-size: 17px;
+    line-height: 1.55;
+    overflow-x: hidden;
+  }
+
+  ::selection {
+    background: var(--aqua);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--aqua-deep);
+    outline-offset: 3px;
+    border-radius: 2px;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  /* Headlines: one grotesque, medium weight, set solid and tight. */
+  .display {
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.045em;
+    text-wrap: balance;
+  }
+
+  /* The only italic on the page, and never more than a word or two of it. */
+  .accent {
+    font-family: var(--font-bodoni), Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+  }
+
+  .meta {
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .figure {
+    font-weight: 500;
+    font-variant-numeric: lining-nums tabular-nums;
+    line-height: 0.85;
+    letter-spacing: -0.05em;
+  }
+
+  /* Pill control, borrowed shape, our colours. */
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    border-radius: 999px;
+    padding: 0.7rem 1.4rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .pill svg {
+    transition: transform 0.3s ease;
+  }
+
+  .pill:hover svg {
+    transform: translateX(3px);
+  }
+
+  /* The waterline: the hairline sections hang from. */
+  .waterline {
+    position: relative;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  .waterline::after {
+    content: "";
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: var(--sweep, 0%);
+    background: var(--sweep-color, var(--aqua));
+  }
+
+  .field {
+    width: 100%;
+    border: 1px solid rgba(11, 42, 51, 0.16);
+    border-radius: 0.75rem;
+    background: rgba(255, 255, 255, 0.38);
+    padding: 0.85rem 1rem;
+    color: var(--ink);
+    transition: border-color 0.25s ease, background-color 0.25s ease;
+  }
+
+  .field:focus {
+    border-color: var(--aqua-deep);
+    background: rgba(255, 255, 255, 0.7);
+    outline: none;
+  }
+
+  .editorial h2 {
+    margin-top: 3.5rem;
+    font-size: clamp(1.65rem, 3vw, 2.4rem);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+  }
+
+  .editorial h3 {
+    margin-top: 2.5rem;
+    font-size: 1.3rem;
+    font-weight: 500;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+  }
+
+  .editorial p {
+    margin-top: 1.25rem;
+    color: rgba(11, 42, 51, 0.68);
+    line-height: 1.75;
+  }
+}
+
+/* Word-by-word blur reveal, the page's signature text animation. */
+.word {
+  display: inline-block;
+  filter: blur(10px);
+  opacity: 0.05;
+  will-change: filter, opacity, transform;
+}
+
+/* Coloured panels arrive narrow and open to full width. Below the md
+   breakpoint the inset would eat the 20px gutter, so it stays at zero. */
+.expand {
+  clip-path: inset(0 0 0 0);
+  will-change: clip-path;
+}
+
+@media (min-width: 768px) {
+  .expand {
+    clip-path: inset(
+      var(--expand-y, 2.5rem) var(--expand-x, 12%) var(--expand-y, 2.5rem)
+        var(--expand-x, 12%) round var(--expand-round, 3rem)
+    );
+  }
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.wipe-mask {
+  clip-path: inset(0 var(--wipe, 100%) 0 0);
+  will-change: clip-path;
+}
+
+.wipe-mask img {
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .word {
+    filter: none !important;
+    opacity: 1 !important;
+  }
+  .reveal {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .wipe-mask {
+    clip-path: none !important;
+  }
+  .expand {
+    clip-path: none !important;
+  }
 }
