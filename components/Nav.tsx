@@ -68,7 +68,19 @@ export default function Nav() {
             fill
             priority
             sizes="184px"
-            className="object-contain object-left"
+            className={`object-contain object-left transition-opacity duration-500 ${
+              solid ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <Image
+            src="/media/logo-platypool-light-tight.webp"
+            alt=""
+            fill
+            priority
+            sizes="184px"
+            className={`object-contain object-left transition-opacity duration-500 ${
+              solid ? "opacity-0" : "opacity-100"
+            }`}
           />
         </a>
 
