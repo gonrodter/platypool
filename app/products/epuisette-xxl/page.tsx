@@ -22,7 +22,7 @@ const features = [
   ["2 mètres", "Toute la largeur utile en un seul passage."],
   ["2-en-1", "Surface et ligne d'eau dans le même geste."],
   ["800 grammes", "Elle flotte et se manie d'un seul doigt."],
-  ["7 kilogrammes", "Une vraie contenance, même après un coup de vent."],
+  ["7 kg", "Une vraie contenance, même après un coup de vent."],
   ["1 minute", "Quatre étapes de montage, aucun outil."],
   ["10 ans", "Structure durable, filet et brosses remplaçables."],
 ];
@@ -36,9 +36,9 @@ export default function ProductPage() {
             {gallery.map(([src, alt], index) => (
               <div
                 key={src}
-                className={`reveal ${index === 0 ? "order-1 lg:order-none lg:col-span-2" : "order-3 lg:order-none"}`}
+                className={index === 0 ? "order-1 lg:order-none lg:col-span-2" : "order-3 lg:order-none"}
               >
-                <div className="wipe-mask overflow-hidden rounded-2xl bg-stone" data-wipe>
+                <div className="overflow-hidden rounded-2xl bg-stone">
                   <Image
                     src={src}
                     alt={alt}

@@ -14,7 +14,7 @@ export default function ProductBuy({ variantId, price, compact = false }: Props)
   const checkout = `https://www.platypool.com/cart/${variantId}:${quantity}`;
 
   return (
-    <div className={compact ? "" : "border-t border-ink/12 pt-7"}>
+    <div className={compact ? "" : "pt-7"}>
       <div className="flex items-end justify-between gap-5">
         <div>
           <p className="meta text-ink/40">Prix TTC</p>
