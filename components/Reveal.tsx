@@ -55,8 +55,33 @@ export default function Reveal() {
         if (!words.length) return;
 
         const fast = block.hasAttribute("data-blur");
+        const rect = block.getBoundingClientRect();
+        const pageIntro =
+          block.tagName === "H1" &&
+          rect.top < window.innerHeight * 0.85 &&
+          rect.bottom > 0;
 
-        if (block.getBoundingClientRect().top < window.innerHeight * 0.85) {
+        // Every page hero gets the signature landing animation that originally
+        // belonged only to SweepHero: soft words resolve left to right while
+        // settling by a few pixels. It plays once on page entry, not on scroll.
+        if (pageIntro) {
+          gsap.fromTo(
+            words,
+            { filter: "blur(12px)", opacity: 0.04, y: 10 },
+            {
+              ...SHARP,
+              y: 0,
+              duration: 0.85,
+              ease: "power2.out",
+              stagger: 0.055,
+              delay: 0.18,
+              onComplete: () => gsap.set(words, { willChange: "auto" }),
+            },
+          );
+          return;
+        }
+
+        if (rect.top < window.innerHeight * 0.85) {
           gsap.set(words, SHARP);
           return;
         }
