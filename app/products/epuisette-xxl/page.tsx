@@ -3,6 +3,7 @@ import PageChrome from "@/components/PageChrome";
 import ProductBuy from "@/components/ProductBuy";
 import Words from "@/components/Words";
 import Counter from "@/components/Counter";
+import HorizontalCarousel from "@/components/HorizontalCarousel";
 import { Check } from "@/components/Marks";
 import { getLocale, localizedMetadata } from "@/lib/i18n";
 
@@ -60,11 +61,13 @@ export default async function ProductPage() {
     <PageChrome>
       <section className="px-5 pb-24 pt-14 sm:px-8 sm:pb-32 sm:pt-20">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.12fr_.88fr] lg:gap-20">
-          <div
-            className="order-1 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:order-none lg:mx-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:px-0 lg:pb-0"
-            role="region"
-            aria-label={es ? "Galería de imágenes del recogehojas Platypool" : "Galerie d'images de l'épuisette Platypool"}
-            tabIndex={0}
+          <HorizontalCarousel
+            ariaLabel={es ? "Galería de imágenes del recogehojas Platypool" : "Galerie d'images de l'épuisette Platypool"}
+            initialTotal={gallery.length}
+            locale={es ? "es" : "fr"}
+            wrapperClassName="order-1 -mx-5 min-w-0 lg:order-none lg:mx-0"
+            scrollerClassName="flex w-full snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:grid lg:grid-cols-2 lg:overflow-visible lg:px-0 lg:pb-0"
+            indicatorClassName="px-5 lg:hidden"
           >
             {gallery.map(([src, alt], index) => (
               <div
@@ -86,7 +89,7 @@ export default async function ProductPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </HorizontalCarousel>
 
           <div className="order-2 lg:order-none lg:sticky lg:top-28 lg:self-start">
             <Words

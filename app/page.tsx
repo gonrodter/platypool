@@ -10,6 +10,7 @@ import PressMarquee from "@/components/PressMarquee";
 import { Check, Cross } from "@/components/Marks";
 import GoogleMark from "@/components/GoogleMark";
 import GoogleWordmark from "@/components/GoogleWordmark";
+import HorizontalCarousel from "@/components/HorizontalCarousel";
 import Footer from "@/components/Footer";
 import { getLocale, localizedPath, type Locale } from "@/lib/i18n";
 
@@ -171,7 +172,7 @@ const reviewsEs: Review[] = [
 
 function ReviewCard({ review, locale }: { review: Review; locale: Locale }) {
   return (
-    <figure className="reveal w-[84vw] max-w-[22rem] shrink-0 snap-center break-inside-avoid overflow-hidden rounded-2xl bg-paper/70 md:mb-6 md:w-auto md:max-w-none md:snap-none">
+    <figure className={`reveal w-[84vw] max-w-[22rem] shrink-0 snap-center break-inside-avoid overflow-hidden rounded-2xl bg-paper/70 md:mb-6 md:block md:w-auto md:max-w-none md:snap-none ${review.photo ? "" : "hidden"}`}>
       {review.photo ? (
         <Image
           src={review.photo.src}
@@ -538,16 +539,18 @@ export default async function Home() {
               </p>
             </div>
 
-            <div
-              className="-mx-5 mt-14 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto overscroll-x-contain px-5 pb-3 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:block md:columns-2 md:overflow-visible md:px-0 md:pb-0 lg:columns-3"
-              role="region"
-              aria-label={es ? "Carrusel de opiniones de clientes" : "Carrousel d'avis clients"}
-              tabIndex={0}
+            <HorizontalCarousel
+              ariaLabel={es ? "Carrusel de opiniones de clientes" : "Carrousel d'avis clients"}
+              initialTotal={reviews.filter((review) => review.photo).length}
+              locale={locale}
+              wrapperClassName="-mx-5 mt-14 min-w-0 md:mx-0"
+              scrollerClassName="flex w-full snap-x snap-mandatory items-start gap-4 overflow-x-auto overscroll-x-contain px-5 pb-3 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:block md:columns-2 md:overflow-visible md:px-0 md:pb-0 lg:columns-3"
+              indicatorClassName="px-5 md:hidden"
             >
               {reviews.map((r) => (
                 <ReviewCard key={r.name} review={r} locale={locale} />
               ))}
-            </div>
+            </HorizontalCarousel>
           </div>
         </section>
 
