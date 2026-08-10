@@ -425,12 +425,7 @@ export default async function Home() {
                 </p>
               </div>
 
-              <div
-                className="waterline reveal mt-12 bg-paper/20 [--sweep:0%]"
-                data-rule
-                aria-hidden="true"
-              />
-              <div className="mt-8 grid grid-cols-3 gap-6">
+              <div className="mt-12 grid grid-cols-3 gap-6">
                 <div className="reveal">
                   <p className="figure text-[clamp(1.9rem,3.5vw,2.75rem)]">
                     <Counter value={10000} />
