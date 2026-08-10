@@ -22,7 +22,7 @@ export default async function NetPage() {
           </div>
           <div>
             <p className="meta text-ink/40" data-blur>{es ? "Pieza de recambio" : "Pièce de rechange"}</p>
-            <Words as="h1" className="display mt-6 text-[clamp(2.6rem,6vw,4.8rem)]" text={es ? "Cambia la red / No tu *Platypool*" : "Le filet change / Pas votre *Platypool*"} />
+            <Words as="h1" className="display mt-6 text-[clamp(2.6rem,6vw,4.8rem)]" text={es ? "Cambia la red. / No tu *Platypool*" : "Le filet change. / Pas votre *Platypool*"} />
             <p className="mt-7 max-w-lg text-ink/65" data-blur>
               {es ? "La red por separado, lista para sustituir la pieza original. La misma anchura, la misma gran capacidad y montaje sin herramientas sobre tu estructura actual." : "Le filet seul, prêt à remplacer la pièce d'origine. Même largeur, même grande contenance et montage sans outil sur votre structure existante."}
             </p>
@@ -36,7 +36,7 @@ export default async function NetPage() {
       <section className="expand bg-stone px-5 py-20 sm:px-8 sm:py-28" data-expand>
         <div className="mx-auto max-w-4xl text-center">
           <p className="meta text-ink/40" data-blur>{es ? "Reparar antes que reemplazar" : "Réparer plutôt que remplacer"}</p>
-          <Words className="display mt-7 text-[clamp(2rem,5vw,3.8rem)]" text={es ? "Una pieza de desgaste / Muchos años *más*" : "Une pièce d'usure / Des années de *plus*"} />
+          <Words className="display mt-7 text-[clamp(2rem,5vw,3.8rem)]" text={es ? "Una pieza de desgaste. / Muchos años *más*" : "Une pièce d'usure. / Des années de *plus*"} />
         </div>
       </section>
     </PageChrome>

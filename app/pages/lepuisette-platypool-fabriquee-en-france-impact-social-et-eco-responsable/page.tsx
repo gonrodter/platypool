@@ -83,7 +83,7 @@ export default async function StoryPage() {
         <div className="mx-auto max-w-6xl">
           <div className="max-w-4xl">
             <p className="meta text-ink/40" data-blur>{es ? "Fabricada en Francia" : "Fabriquée en France"}</p>
-            <Words className="display mt-7 text-[clamp(2.2rem,5vw,4rem)]" text={es ? "Local por elección / Social por *convicción*" : "Locale par choix / Sociale par *conviction*"} />
+            <Words className="display mt-7 text-[clamp(2.2rem,5vw,4rem)]" text={es ? "Local por elección. / Social por *convicción*" : "Locale par choix. / Sociale par *conviction*"} />
           </div>
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[

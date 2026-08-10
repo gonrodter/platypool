@@ -20,7 +20,7 @@ export default async function BlogPage() {
       <section className="px-5 pb-16 pt-16 sm:px-8 sm:pb-24 sm:pt-24">
         <div className="mx-auto max-w-6xl">
           <p className="meta text-ink/40" data-blur>{es ? "Consejos de piscina" : "Conseils piscine"}</p>
-          <Words as="h1" className="display mt-7 max-w-5xl text-[clamp(2.8rem,7vw,6rem)]" text={es ? "Menos tareas / Más *baños*" : "Moins de corvée / Plus de *baignades*"} />
+          <Words as="h1" className="display mt-7 max-w-5xl text-[clamp(2.8rem,7vw,6rem)]" text={es ? "Menos tareas. / Más *baños*" : "Moins de corvée. / Plus de *baignades*"} />
         </div>
       </section>
 

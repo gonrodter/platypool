@@ -226,7 +226,7 @@ export default async function Home() {
             <p className="meta text-ink/40" data-blur>{es ? "El problema, en una frase" : "Le problème, en une phrase"}</p>
             <Words
               className="display mx-auto mt-8 max-w-4xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text={es ? "Un recogehojas clásico mide 30 centímetros de ancho / Tu piscina mide cuatro mil / Las cuentas salen *rápido*" : "Une épuisette classique fait 30 centimètres de large / Votre piscine en fait quatre mille / Le calcul est *vite* fait"}
+              text={es ? "Un recogehojas clásico mide 30 centímetros de ancho. / Tu piscina mide cuatro mil. / Las cuentas salen *rápido*" : "Une épuisette classique fait 30 centimètres de large. / Votre piscine en fait quatre mille. / Le calcul est *vite* fait"}
             />
           </div>
 
@@ -402,7 +402,7 @@ export default async function Home() {
             </p>
             <Words
               className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
-              text={es ? "Mougins, 2020 / Un hotelero se cansa / de pescar *hojas*" : "Mougins, 2020 / Un hôtelier en a assez / de repêcher des *feuilles*"}
+              text={es ? "Mougins, 2020. Un hotelero se cansa / de pescar *hojas*" : "Mougins, 2020. Un hôtelier en a assez / de repêcher des *feuilles*"}
             />
           </div>
 
