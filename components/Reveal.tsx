@@ -200,8 +200,7 @@ export default function Reveal() {
         });
     });
 
-    // Refresh once every effect exists. SweepHero has a higher refreshPriority,
-    // so its four-viewport pin is always accounted for before these triggers.
+    // Refresh once every effect exists and again when fonts/media settle.
     const refresh = () => ScrollTrigger.refresh();
     const frame = requestAnimationFrame(refresh);
     window.addEventListener("load", refresh);
