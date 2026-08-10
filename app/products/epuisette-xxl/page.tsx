@@ -82,12 +82,12 @@ export default async function ProductPage() {
           </div>
 
           <div className="order-2 my-10 lg:order-none lg:sticky lg:top-28 lg:my-0 lg:self-start">
-            <p className="meta text-ink/40" data-blur>{es ? "Innovación patentada · fabricada en Francia" : "Innovation brevetée · fabriquée en France"}</p>
             <Words
               as="h1"
-              className="display mt-6 text-[clamp(2.5rem,5.5vw,4.6rem)]"
+              className="display text-[clamp(2.5rem,5.5vw,4.6rem)]"
               text={es ? "La piscina limpia. / En una sola *vuelta*" : "La piscine propre. / En un seul *tour*"}
             />
+            <p className="meta mt-5 text-ink/40" data-blur>{es ? "Innovación patentada · fabricada en Francia" : "Innovation brevetée · fabriquée en France"}</p>
             <p className="mt-7 max-w-lg text-[1.05rem] leading-relaxed text-ink/65" data-blur>
               {es ? "Dos metros de red flotante barren la superficie mientras los cepillos limpian la línea de agua. Tú tiras de la cuerda y Platypool hace el resto." : "Deux mètres de filet flottant ratissent la surface pendant que les brosses nettoient la ligne d'eau. Vous tirez sur la corde, Platypool fait le reste."}
             </p>
@@ -107,8 +107,7 @@ export default async function ProductPage() {
       <section className="expand bg-stone px-5 py-24 sm:px-8 sm:py-32" data-expand>
         <div className="mx-auto max-w-6xl">
           <div className="max-w-4xl">
-            <p className="meta text-ink/40" data-blur>{es ? "Todo lo que cambia" : "Tout ce qui change"}</p>
-            <Words className="display mt-7 text-[clamp(2rem,5vw,4rem)]" text={es ? "Pensada para hacer menos. / Y recoger *mucho* más" : "Pensée pour faire moins. / Et ramasser *beaucoup* plus"} />
+            <Words className="display text-[clamp(2rem,5vw,4rem)]" text={es ? "Pensada para hacer menos. / Y recoger *mucho* más" : "Pensée pour faire moins. / Et ramasser *beaucoup* plus"} />
           </div>
           <div className="mt-16 grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
             {localizedFeatures.map(([value, copy], index) => (
@@ -131,8 +130,7 @@ export default async function ProductPage() {
             </div>
           </div>
           <div>
-            <p className="meta text-ink/40" data-blur>{es ? "El gesto" : "Le geste"}</p>
-            <Words className="display mt-7 text-[clamp(2rem,4.6vw,3.6rem)]" text={es ? "Coloca. Camina. / *Disfruta*" : "Posez. Marchez. / *Profitez*"} />
+            <Words className="display text-[clamp(2rem,4.6vw,3.6rem)]" text={es ? "Coloca. Camina. / *Disfruta*" : "Posez. Marchez. / *Profitez*"} />
             <div className="mt-10 space-y-7">
               {(es ? [["01", "Colócala sobre el agua", "La estructura flota de forma natural, sin esfuerzo ni mango que cargar"], ["02", "Da la vuelta", "La cuerda guía la red mientras los extremos permanecen contra la pared"], ["03", "Vacía y deja secar", "Basta con sacudirla. El polen se desprende cuando la red está seca"]] : [["01", "Posez-la sur l'eau", "La structure flotte naturellement, sans effort ni manche à porter."], ["02", "Faites le tour", "La corde guide le filet tandis que les extrémités restent contre la paroi."], ["03", "Videz et laissez sécher", "Un secouement suffit. Le pollen se détache une fois le filet sec."]]).map(([n, title, copy]) => (
                 <div key={n} className="reveal grid grid-cols-[3rem_1fr] gap-4 border-t border-ink/12 pt-5">

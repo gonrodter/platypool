@@ -30,8 +30,8 @@ export default async function StoryPage() {
     <PageChrome>
       <section className="px-5 pb-24 pt-16 sm:px-8 sm:pb-32 sm:pt-24">
         <div className="mx-auto max-w-6xl">
-          <p className="meta text-ink/40" data-blur>{es ? "Mougins · Costa Azul" : "Mougins · Côte d'Azur"}</p>
-          <Words as="h1" className="display mt-7 max-w-5xl text-[clamp(2.8rem,7vw,6.4rem)]" text={es ? "Un padre, su hija / y demasiadas *hojas*" : "Un père, sa fille, / et beaucoup trop de *feuilles*"} />
+          <Words as="h1" className="display max-w-5xl text-[clamp(2.8rem,7vw,6.4rem)]" text={es ? "Un padre, su hija / y demasiadas *hojas*" : "Un père, sa fille, / et beaucoup trop de *feuilles*"} />
+          <p className="meta mt-6 text-ink/40" data-blur>{es ? "Mougins · Costa Azul" : "Mougins · Côte d'Azur"}</p>
           <div className="reveal mt-14">
             <div className="wipe-mask overflow-hidden rounded-2xl" data-wipe>
               <Image src="/media/famille-portrait.webp" alt={es ? "Jean-Jacques y Gwenaëlle, inventores de Platypool" : "Jean-Jacques et Gwenaëlle, inventeurs de Platypool"} width={2000} height={1414} priority className="aspect-[16/9] w-full object-cover" sizes="92vw" />
@@ -43,8 +43,7 @@ export default async function StoryPage() {
       <section className="expand bg-deep px-5 py-24 text-paper sm:px-8 sm:py-32" data-expand>
         <div className="mx-auto grid max-w-6xl gap-16 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
           <div>
-            <p className="meta text-paper/40" data-blur>{es ? "El origen" : "L'origine"}</p>
-            <Words className="display mt-7 text-[clamp(2rem,4.5vw,3.7rem)]" text={es ? "Una idea sencilla / que esperaba su *momento*" : "Une idée simple / qui attendait son *moment*"} />
+            <Words className="display text-[clamp(2rem,4.5vw,3.7rem)]" text={es ? "Una idea sencilla / que esperaba su *momento*" : "Une idée simple / qui attendait son *moment*"} />
           </div>
           <div className="space-y-6 text-[1.05rem] leading-relaxed text-paper/70">
             <p data-blur>
@@ -66,7 +65,7 @@ export default async function StoryPage() {
 
       <section className="px-5 py-24 sm:px-8 sm:py-32">
         <div className="mx-auto max-w-6xl">
-          <p className="meta text-ink/40" data-blur>{es ? "Las etapas" : "Les étapes"}</p>
+          <h2 className="display text-[clamp(1.8rem,4vw,3rem)]" data-blur>{es ? "Las etapas" : "Les étapes"}</h2>
           <div className="mt-12">
             {localizedTimeline.map(([year, title, copy]) => (
               <article key={year} className="reveal grid gap-4 border-t border-ink/12 py-8 sm:grid-cols-[8rem_14rem_1fr] sm:gap-8">
@@ -82,8 +81,7 @@ export default async function StoryPage() {
       <section className="expand bg-stone px-5 py-24 sm:px-8 sm:py-32" data-expand>
         <div className="mx-auto max-w-6xl">
           <div className="max-w-4xl">
-            <p className="meta text-ink/40" data-blur>{es ? "Fabricada en Francia" : "Fabriquée en France"}</p>
-            <Words className="display mt-7 text-[clamp(2.2rem,5vw,4rem)]" text={es ? "Local por elección. / Social por *convicción*" : "Locale par choix. / Sociale par *conviction*"} />
+            <Words className="display text-[clamp(2.2rem,5vw,4rem)]" text={es ? "Local por elección. / Social por *convicción*" : "Locale par choix. / Sociale par *conviction*"} />
           </div>
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {[

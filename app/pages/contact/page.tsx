@@ -15,8 +15,7 @@ export default async function ContactPage() {
       <section className="px-5 py-20 sm:px-8 sm:py-28">
         <div className="mx-auto grid max-w-6xl gap-14 lg:grid-cols-[.8fr_1.2fr] lg:gap-24">
           <div>
-            <p className="meta text-ink/40" data-blur>{es ? "Escríbenos" : "Nous écrire"}</p>
-            <Words as="h1" className="display mt-7 text-[clamp(2.8rem,6vw,5.2rem)]" text={es ? "¿Tienes una pregunta? / Hablemos *fácil*" : "Une question ? / Parlons-en *simplement*"} />
+            <Words as="h1" className="display text-[clamp(2.8rem,6vw,5.2rem)]" text={es ? "¿Tienes una pregunta? / Hablemos *fácil*" : "Une question ? / Parlons-en *simplement*"} />
             <p className="mt-8 max-w-md text-ink/60" data-blur>{es ? "Nuestro equipo está en Francia y suele responder en un plazo de 48 horas laborables." : "Notre équipe est en France et répond généralement sous 48 heures ouvrées."}</p>
             <div className="reveal mt-10 border-t border-ink/12 pt-6">
               <p className="meta text-ink/40">{es ? "Correo directo" : "E-mail direct"}</p>

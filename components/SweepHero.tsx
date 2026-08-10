@@ -35,12 +35,8 @@ export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
         className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(6,24,30,0.72)_0%,rgba(6,24,30,0.42)_38%,rgba(6,24,30,0.05)_68%,rgba(6,24,30,0)_100%)]"
       />
 
-      <div className="relative flex h-full flex-col justify-between px-5 pt-24 pb-6 text-paper sm:px-8 sm:pt-28 sm:pb-8">
-        <p className="meta max-w-[15rem] text-paper/75" data-blur>
-          {es ? "Mougins, Costa Azul — patente FR, UE y EE. UU." : "Mougins, Côte d'Azur — brevet FR, EU & US"}
-        </p>
-
-        <div className="max-w-4xl">
+      <div className="relative grid h-full grid-rows-[1fr_auto_1fr] px-5 pt-24 pb-6 text-paper sm:px-8 sm:pt-28 sm:pb-8">
+        <div className="row-start-2 max-w-4xl">
           <Words
             as="h1"
             className="display text-[clamp(2.5rem,7.5vw,6rem)]"
@@ -51,7 +47,7 @@ export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
           </p>
         </div>
 
-        <div className="reveal">
+        <div className="reveal row-start-3 self-end">
           <div className="flex flex-wrap items-end justify-end gap-x-8 gap-y-3">
             <a
               href="#acheter"

@@ -223,9 +223,8 @@ export default async function Home() {
           className="px-5 pt-28 pb-24 sm:px-8 sm:pt-40 sm:pb-32"
         >
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-ink/40" data-blur>{es ? "El problema, en una frase" : "Le problème, en une phrase"}</p>
             <Words
-              className="display mx-auto mt-8 max-w-4xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
+              className="display mx-auto max-w-4xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
               text={es ? "Un recogehojas clásico mide 30 centímetros de ancho. / Tu piscina mide cuatro mil. / Las cuentas salen *rápido*" : "Une épuisette classique fait 30 centimètres de large. / Votre piscine en fait quatre mille. / Le calcul est *vite* fait"}
             />
           </div>
@@ -257,9 +256,8 @@ export default async function Home() {
         {/* Two-in-one, told as two image cards that read left to right. */}
         <section className="expand bg-stone px-5 py-24 sm:px-8 sm:py-32" data-expand>
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-ink/40" data-blur>{es ? "Lo que hace" : "Ce qu'elle fait"}</p>
             <Words
-              className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
+              className="display mx-auto max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
               text={es ? "Dos gestos que nadie había pensado *unir*" : "Deux gestes que personne n'avait pensé à *réunir*"}
             />
           </div>
@@ -314,11 +312,8 @@ export default async function Home() {
         {/* Comparison: their table, rewritten as parallel prose on a rule. */}
         <section className="px-5 py-24 sm:px-8 sm:py-32">
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-ink/40" data-blur>
-              {es ? "El recogehojas de siempre · Platypool" : "L'épuisette d'avant · Platypool"}
-            </p>
             <Words
-              className="display mx-auto mt-8 text-[clamp(1.85rem,4.6vw,3.5rem)]"
+              className="display mx-auto text-[clamp(1.85rem,4.6vw,3.5rem)]"
               text={es ? "¿Cuánto vale un verano sin / *esfuerzo*?" : "Combien vaut un été sans *corvée* ?"}
             />
           </div>
@@ -397,11 +392,8 @@ export default async function Home() {
           data-expand
         >
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-paper/40" data-blur>
-              {es ? "Nacida de una historia familiar" : "Née d'une histoire de famille"}
-            </p>
             <Words
-              className="display mx-auto mt-8 max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
+              className="display mx-auto max-w-3xl text-[clamp(1.85rem,4.6vw,3.5rem)]"
               text={es ? "Mougins, 2020. Un hotelero se cansa / de pescar *hojas*" : "Mougins, 2020. Un hôtelier en a assez / de repêcher des *feuilles*"}
             />
           </div>
@@ -465,7 +457,7 @@ export default async function Home() {
         {/* Awards: the assets that were buried on the old site. */}
         <section className="px-5 py-24 sm:px-8 sm:py-32">
           <div className="mx-auto max-w-6xl">
-            <p className="meta text-ink/40" data-blur>{es ? "Reconocida y después patentada" : "Reconnue, puis brevetée"}</p>
+            <h2 className="display text-[clamp(1.85rem,4vw,3rem)]" data-blur>{es ? "Reconocida y después patentada" : "Reconnue, puis brevetée"}</h2>
 
             <div className="mt-12 grid gap-10 md:grid-cols-3">
               <div className="reveal flex items-start gap-5" data-award>
@@ -521,11 +513,8 @@ export default async function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="flex flex-wrap items-end justify-between gap-6">
               <div>
-                <p className="meta text-ink/40" data-blur>
-                  {es ? "Lo que cuentan" : "Ce qu'ils en disent"}
-                </p>
                 <Words
-                  className="display mt-6 text-[clamp(1.85rem,4.6vw,3.25rem)]"
+                  className="display text-[clamp(1.85rem,4.6vw,3.25rem)]"
                   text={es ? "Diez mil piscinas / y ni un solo *arrepentimiento*" : "Dix mille piscines, / et pas un *regret*"}
                 />
               </div>
@@ -563,9 +552,8 @@ export default async function Home() {
             </div>
 
             <div>
-              <p className="meta text-ink/40" data-blur>{es ? "El recogehojas XXL" : "L'épuisette XXL"}</p>
               <Words
-                className="display mt-6 text-[clamp(2rem,4.4vw,3.25rem)]"
+                className="display text-[clamp(2rem,4.4vw,3.25rem)]"
                 text={es ? "Limpia menos / disfruta *más*" : "Nettoyez moins, / profitez *plus*"}
               />
 

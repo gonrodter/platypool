@@ -76,8 +76,8 @@ export default async function ArticlePage({ params }: PageProps<"/blogs/infos/[s
       <article>
         <header className="px-5 pb-14 pt-16 sm:px-8 sm:pb-20 sm:pt-24">
           <div className="mx-auto max-w-5xl text-center">
-            <p className="meta text-ink/40" data-blur>{category} · {article.date}</p>
-            <h1 className="display mx-auto mt-7 max-w-5xl text-[clamp(2.6rem,6.5vw,5.5rem)]" data-blur>{article.title}</h1>
+            <h1 className="display mx-auto max-w-5xl text-[clamp(2.6rem,6.5vw,5.5rem)]" data-blur>{article.title}</h1>
+            <p className="meta mt-5 text-ink/40" data-blur>{category} · {article.date}</p>
             <p className="mx-auto mt-7 max-w-2xl text-[1.1rem] leading-relaxed text-ink/60" data-blur>{article.excerpt}</p>
           </div>
         </header>
@@ -88,7 +88,7 @@ export default async function ArticlePage({ params }: PageProps<"/blogs/infos/[s
           <aside className="reveal mt-14 rounded-2xl bg-aqua/35 p-7 sm:p-9"><p className="meta !mt-0 !text-ink/40">{es ? "En resumen" : "À retenir"}</p><p className="!text-ink/75">{es ? "Retirar pronto los residuos, cubrir más superficie en cada pasada y elegir una herramienta reparable: tres decisiones sencillas que transforman toda la rutina." : "Retirer les débris tôt, couvrir plus de surface à chaque passage et choisir un outil réparable : trois décisions simples qui changent toute la routine."}</p><a href={localizedPath(locale, "/products/epuisette-xxl")} className="mt-6 inline-flex items-center gap-3 border-b border-ink/25 pb-1">{es ? "Descubrir Platypool" : "Découvrir Platypool"} <Arrow /></a></aside>
         </div>
       </article>
-      <section className="bg-stone px-5 py-20 sm:px-8 sm:py-28"><div className="mx-auto max-w-6xl"><p className="meta text-ink/40" data-blur>{es ? "Seguir leyendo" : "Continuer la lecture"}</p><div className="mt-10 grid gap-7 md:grid-cols-3">{related.map(item=><a href={localizedPath(locale, `/blogs/infos/${item.slug}`)} key={item.slug} className="reveal group"><Image src={item.image} alt="" width={700} height={525} className="aspect-[4/3] w-full rounded-2xl object-cover" /><h2 className="display mt-5 text-[1.45rem]">{item.title}</h2></a>)}</div></div></section>
+      <section className="bg-stone px-5 py-20 sm:px-8 sm:py-28"><div className="mx-auto max-w-6xl"><h2 className="display text-[clamp(1.8rem,4vw,3rem)]" data-blur>{es ? "Seguir leyendo" : "Continuer la lecture"}</h2><div className="mt-10 grid gap-7 md:grid-cols-3">{related.map(item=><a href={localizedPath(locale, `/blogs/infos/${item.slug}`)} key={item.slug} className="reveal group"><Image src={item.image} alt="" width={700} height={525} className="aspect-[4/3] w-full rounded-2xl object-cover" /><h3 className="display mt-5 text-[1.45rem]">{item.title}</h3></a>)}</div></div></section>
     </PageChrome>
   );
 }
