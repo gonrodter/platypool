@@ -25,10 +25,10 @@ export default function BlogPage() {
         <div className="mx-auto max-w-6xl">
           <a href={`/blogs/infos/${featured.slug}`} className="group grid gap-8 rounded-3xl bg-stone p-4 sm:p-6 lg:grid-cols-[1.2fr_.8fr] lg:items-center">
             <div className="reveal"><div className="wipe-mask overflow-hidden rounded-2xl" data-wipe><Image src={featured.image} alt="" width={1200} height={900} priority className="aspect-[4/3] w-full object-cover" sizes="(min-width:1024px) 57vw, 92vw" /></div></div>
-            <div className="p-3 sm:p-6">
-              <p className="meta text-ink/40">À lire · {featured.category}</p>
-              <h2 className="display mt-6 text-[clamp(2rem,4vw,3.4rem)]">{featured.title}</h2>
-              <p className="mt-5 text-ink/60">{featured.excerpt}</p>
+            <div className="reveal p-3 sm:p-6">
+              <p className="meta text-ink/40" data-blur>À lire · {featured.category}</p>
+              <h2 className="display mt-6 text-[clamp(2rem,4vw,3.4rem)]" data-blur>{featured.title}</h2>
+              <p className="mt-5 text-ink/60" data-blur>{featured.excerpt}</p>
               <span className="mt-8 inline-flex items-center gap-3 border-b border-ink/30 pb-1">Lire le guide <Arrow /></span>
             </div>
           </a>
