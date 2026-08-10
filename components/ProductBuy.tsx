@@ -55,7 +55,7 @@ export default function ProductBuy({ variantId, price, compact = false, contrast
             : "bg-aqua text-ink hover:bg-ink hover:text-paper"
         }`}
       >
-        {es ? "Añadir al carrito" : "Ajouter au panier"} <Arrow />
+        {es ? "Comprar ya" : "Acheter maintenant"} <Arrow />
       </a>
       <p className="meta mt-4 text-center text-ink/40">
         {es ? "Pago seguro · envío a Francia y Europa" : "Paiement sécurisé · livraison France & Europe"}

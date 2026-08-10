@@ -171,7 +171,7 @@ const reviewsEs: Review[] = [
 
 function ReviewCard({ review, locale }: { review: Review; locale: Locale }) {
   return (
-    <figure className="reveal mb-6 break-inside-avoid overflow-hidden rounded-2xl bg-paper/70">
+    <figure className="reveal w-[84vw] max-w-[22rem] shrink-0 snap-center break-inside-avoid overflow-hidden rounded-2xl bg-paper/70 md:mb-6 md:w-auto md:max-w-none md:snap-none">
       {review.photo ? (
         <Image
           src={review.photo.src}
@@ -179,7 +179,7 @@ function ReviewCard({ review, locale }: { review: Review; locale: Locale }) {
           width={900}
           height={675}
           className="aspect-4/3 w-full object-cover"
-          sizes="(min-width: 1024px) 30vw, (min-width: 768px) 46vw, 92vw"
+          sizes="(min-width: 1024px) 30vw, (min-width: 768px) 46vw, 84vw"
         />
       ) : null}
       <blockquote className="p-7">
@@ -318,7 +318,31 @@ export default async function Home() {
             />
           </div>
 
-          <div className="mx-auto mt-16 max-w-5xl overflow-x-auto">
+          <div className="mx-auto mt-12 max-w-5xl md:hidden">
+            <div className="grid grid-cols-2 gap-3 px-1">
+              <p className="meta text-ink/40">{es ? "Recogehojas clásico" : "Épuisette classique"}</p>
+              <p className="meta text-aqua-deep">Platypool</p>
+            </div>
+            <div className="mt-4 space-y-4">
+              {comparison.map((row) => (
+                <article key={row.criterion} className="reveal overflow-hidden rounded-2xl border border-ink/10">
+                  <h3 className="meta border-b border-ink/10 bg-paper/55 px-4 py-3 text-ink/45">{row.criterion}</h3>
+                  <div className="grid grid-cols-2">
+                    <div className="flex gap-2.5 p-4 text-[0.92rem] leading-snug text-ink/50">
+                      <Cross />
+                      <p>{row.before}</p>
+                    </div>
+                    <div className="flex gap-2.5 bg-aqua/25 p-4 text-[0.92rem] leading-snug text-ink">
+                      <Check />
+                      <p>{row.after}</p>
+                    </div>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="mx-auto mt-16 hidden max-w-5xl overflow-x-auto md:block">
             <table className="w-full min-w-xl border-collapse text-left">
               <caption className="sr-only">
                 {es ? "Comparativa entre un recogehojas clásico y Platypool" : "Comparatif entre une épuisette classique et Platypool"}
@@ -519,7 +543,12 @@ export default async function Home() {
               </p>
             </div>
 
-            <div className="mt-14 gap-6 md:columns-2 lg:columns-3">
+            <div
+              className="-mx-5 mt-14 flex snap-x snap-mandatory items-start gap-4 overflow-x-auto overscroll-x-contain px-5 pb-3 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:mx-0 md:block md:columns-2 md:overflow-visible md:px-0 md:pb-0 lg:columns-3"
+              role="region"
+              aria-label={es ? "Carrusel de opiniones de clientes" : "Carrousel d'avis clients"}
+              tabIndex={0}
+            >
               {reviews.map((r) => (
                 <ReviewCard key={r.name} review={r} locale={locale} />
               ))}
@@ -578,7 +607,7 @@ export default async function Home() {
                 href={localizedPath(locale, "/products/epuisette-xxl")}
                 className="pill reveal mt-10 bg-aqua text-ink hover:bg-ink hover:text-paper"
               >
-                {es ? "Añadir al carrito" : "Ajouter au panier"}
+                {es ? "Comprar ya" : "Acheter maintenant"}
                 <Arrow />
               </a>
 
