@@ -12,10 +12,16 @@ export const metadata: Metadata = {
 };
 
 const gallery = [
-  ["/media/packshot-boite.webp", "Platypool et sa boîte fabriquée en France"],
-  ["/media/contenu-boite.webp", "Tous les éléments contenus dans la boîte Platypool"],
-  ["/media/filet-plein.webp", "Le grand filet Platypool rempli de feuilles"],
-  ["/media/ligne-eau.webp", "Les brosses Platypool nettoient la ligne d'eau"],
+  ["/media/gallery-product-01.webp", "Epuisette piscine XXL Platypool 2 mètres sans effort vue principale"],
+  ["/media/gallery-product-02.webp", "Platypool épuisette XXL flottante nettoyage piscine rapide"],
+  ["/media/gallery-product-03.webp", "Epuisette Platypool compatible piscine hors-sol enterrée liner béton"],
+  ["/media/gallery-product-04.webp", "Filet épuisette XXL grande contenance 7 kg feuilles insectes pollen"],
+  ["/media/gallery-product-05.webp", "Epuisette XXL Platypool légère 800 g maniable et pratique"],
+  ["/media/gallery-product-06.webp", "Epuisette Platypool montage en une minute sans outil"],
+  ["/media/gallery-product-07.webp", "Nettoyage ligne d'eau piscine avec les brosses intégrées Platypool"],
+  ["/media/gallery-product-08.webp", "Epuisette Platypool sortie de piscine après le nettoyage des débris"],
+  ["/media/gallery-product-09.webp", "Platypool innovation française, deux médailles au Concours Lépine 2021"],
+  ["/media/gallery-product-10.webp", "Epuisette piscine XXL Platypool en matériaux résistants au chlore et aux UV"],
 ];
 
 const features = [
@@ -45,8 +51,8 @@ export default function ProductPage() {
                     width={1080}
                     height={1080}
                     priority={index === 0}
-                    className={`w-full object-cover ${index === 0 ? "aspect-[16/10]" : "aspect-square"}`}
-                    sizes={index === 0 ? "(min-width: 1024px) 54vw, 92vw" : "(min-width: 1024px) 27vw, 45vw"}
+                    className="aspect-square w-full object-cover"
+                    sizes={index === 0 ? "(min-width: 1024px) 54vw, 92vw" : "(min-width: 1024px) 27vw, 92vw"}
                   />
                 </div>
               </div>
