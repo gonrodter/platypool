@@ -60,8 +60,6 @@ export default function Nav() {
       }`}
     >
       <div className="flex items-center justify-between px-3 py-4 min-[360px]:px-5 sm:px-8">
-        {/* Two files rather than a filter: the wave in the A must keep its
-            colour on light ground and disappear into white on the video. */}
         <a href={home ? "#top" : localize("/")} className="relative block h-4 w-[9.5rem] sm:h-5 sm:w-[11.5rem]">
           <span className="sr-only">Platypool — {locale === "es" ? "inicio" : "accueil"}</span>
           <Image
@@ -70,19 +68,7 @@ export default function Nav() {
             fill
             priority
             sizes="184px"
-            className={`object-contain object-left transition-opacity duration-500 ${
-              solid ? "opacity-100" : "opacity-0"
-            }`}
-          />
-          <Image
-            src="/media/logo-platypool-light.webp"
-            alt=""
-            fill
-            priority
-            sizes="184px"
-            className={`object-contain object-left transition-opacity duration-500 ${
-              solid ? "opacity-0" : "opacity-100"
-            }`}
+            className="object-contain object-left"
           />
         </a>
 
