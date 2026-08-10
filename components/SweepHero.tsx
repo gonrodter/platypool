@@ -14,7 +14,7 @@ export default function SweepHero({ locale = "fr" }: { locale?: Locale }) {
     >
       <video
         data-hero-media
-        className="absolute inset-0 h-full w-full -translate-y-[5%] scale-[1.18] object-cover sm:-translate-x-[10%] sm:-translate-y-[8%] sm:scale-[1.35]"
+        className="absolute inset-0 h-full w-full -translate-y-[5%] scale-[1.18] object-cover object-center sm:-translate-y-[8%] sm:scale-[1.35]"
         autoPlay
         muted
         loop
