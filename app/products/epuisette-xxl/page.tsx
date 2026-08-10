@@ -60,11 +60,18 @@ export default async function ProductPage() {
     <PageChrome>
       <section className="px-5 pb-24 pt-14 sm:px-8 sm:pb-32 sm:pt-20">
         <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-[1.12fr_.88fr] lg:gap-20">
-          <div className="contents lg:grid lg:grid-cols-2 lg:gap-4">
+          <div
+            className="order-1 -mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto overscroll-x-contain px-5 pb-2 scroll-smooth [scrollbar-width:none] [&::-webkit-scrollbar]:hidden lg:order-none lg:mx-0 lg:grid lg:grid-cols-2 lg:overflow-visible lg:px-0 lg:pb-0"
+            role="region"
+            aria-label={es ? "Galería de imágenes del recogehojas Platypool" : "Galerie d'images de l'épuisette Platypool"}
+            tabIndex={0}
+          >
             {gallery.map(([src, alt], index) => (
               <div
                 key={src}
-                className={index === 0 ? "order-1 lg:order-none lg:col-span-2" : "order-3 lg:order-none"}
+                className={`w-[84vw] max-w-[22rem] shrink-0 snap-center lg:w-auto lg:max-w-none lg:snap-none ${
+                  index === 0 ? "lg:col-span-2" : ""
+                }`}
               >
                 <div className="overflow-hidden rounded-2xl bg-stone">
                   <Image
@@ -74,14 +81,14 @@ export default async function ProductPage() {
                     height={1080}
                     priority={index === 0}
                     className="aspect-square w-full object-cover"
-                    sizes={index === 0 ? "(min-width: 1024px) 54vw, 92vw" : "(min-width: 1024px) 27vw, 92vw"}
+                    sizes={index === 0 ? "(min-width: 1024px) 54vw, 84vw" : "(min-width: 1024px) 27vw, 84vw"}
                   />
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="order-2 my-10 lg:order-none lg:sticky lg:top-28 lg:my-0 lg:self-start">
+          <div className="order-2 lg:order-none lg:sticky lg:top-28 lg:self-start">
             <Words
               as="h1"
               className="display text-[clamp(2.5rem,5.5vw,4.6rem)]"
