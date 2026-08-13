@@ -33,7 +33,7 @@ const copy = {
 
 export default function Footer() {
   const pathname = usePathname();
-  const locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : pathname === "/en" || pathname.startsWith("/en/") ? "en" : "es";
+  const locale = pathname === "/es" || pathname.startsWith("/es/") ? "es" : pathname === "/en" || pathname.startsWith("/en/") ? "en" : "fr";
   const t = copy[locale];
   const localize = (path: string) => path === "/" ? `/${locale}` : `/${locale}${path}`;
 

@@ -1,19 +1,24 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 type Locale = "es" | "fr" | "en";
+const DEFAULT_LOCALE: Locale = "fr";
 const isLocale = (value: string | null | undefined): value is Locale =>
   value === "es" || value === "fr" || value === "en";
 
 function preferredLocale(request: NextRequest): Locale {
   const saved = request.cookies.get("platypool-locale")?.value;
   if (isLocale(saved)) return saved;
-  const language = request.headers.get("accept-language")?.toLowerCase();
-  if (language?.startsWith("fr")) return "fr";
-  if (language?.startsWith("en")) return "en";
-  return "es";
+  return DEFAULT_LOCALE;
 }
 
 export function proxy(request: NextRequest) {
+  // Rewrites pass through Proxy again in Next.js 16. The locale header marks
+  // that internal request so it can reach the underlying App Router route.
+  const forwardedLocale = request.headers.get("x-platypool-locale");
+  if (isLocale(forwardedLocale)) {
+    return NextResponse.next();
+  }
+
   const segments = request.nextUrl.pathname.split("/").filter(Boolean);
   const candidate = segments[0];
 

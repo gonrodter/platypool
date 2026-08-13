@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 
 export const locales = ["es", "fr", "en"] as const;
 export type Locale = (typeof locales)[number];
+export const defaultLocale: Locale = "fr";
 
 export function isLocale(value: string | null | undefined): value is Locale {
   return value === "es" || value === "fr" || value === "en";
@@ -10,7 +11,7 @@ export function isLocale(value: string | null | undefined): value is Locale {
 
 export async function getLocale(): Promise<Locale> {
   const value = (await headers()).get("x-platypool-locale");
-  return isLocale(value) ? value : "es";
+  return isLocale(value) ? value : defaultLocale;
 }
 
 export function localizedPath(locale: Locale, path: string) {

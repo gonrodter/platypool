@@ -39,7 +39,7 @@ const languageNames = { es: "Español", fr: "Français", en: "English" } as cons
 
 export default function Nav() {
   const pathname = usePathname();
-  const locale: Locale = pathname === "/fr" || pathname.startsWith("/fr/") ? "fr" : pathname === "/en" || pathname.startsWith("/en/") ? "en" : "es";
+  const locale: Locale = pathname === "/es" || pathname.startsWith("/es/") ? "es" : pathname === "/en" || pathname.startsWith("/en/") ? "en" : "fr";
   const t = navCopy[locale];
   const pathWithoutLocale = pathname.replace(/^\/(es|fr|en)(?=\/|$)/, "") || "/";
   const home = pathWithoutLocale === "/";
